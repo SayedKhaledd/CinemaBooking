@@ -8,8 +8,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CinemaBooking">
-        <activity android:name=".Signup"></activity>
+        android:theme="@style/Theme.CinemaBooking.NoActionBar">
+        <activity android:name=".Search"></activity>
+        <activity android:name=".Signup" />
         <activity android:name=".Login" />
         <activity android:name=".MainActivity">
             <intent-filter>
