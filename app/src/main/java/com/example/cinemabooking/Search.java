@@ -132,4 +132,9 @@ public class Search extends AppCompatActivity implements TextWatcher {
                 Toast.makeText(getApplicationContext(), "no", Toast.LENGTH_LONG);
             }
         }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }
