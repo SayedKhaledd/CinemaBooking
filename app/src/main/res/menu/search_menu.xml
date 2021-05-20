@@ -7,7 +7,7 @@
         android:icon="@drawable/ic_voice"
         app:showAsAction="always"
         android:title="voice" />
-     
+
 
 
 </menu>
