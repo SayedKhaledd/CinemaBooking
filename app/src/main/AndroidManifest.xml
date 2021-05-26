@@ -13,10 +13,15 @@
         <activity android:name=".Search"
 
             android:theme="@style/Theme.CinemaBooking.NoActionBar"></activity>
+
+
+
         <activity android:name=".Signup" />
         <activity android:name=".Login" />
-        <activity android:name=".MainActivity"
-            android:theme="@style/Theme.CinemaBooking.NoActionBar">
+       <activity android:name=".MainActivity"
+        android:theme="@style/Theme.CinemaBooking.NoActionBar"/>
+
+        <activity android:name=".Splach_Screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

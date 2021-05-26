@@ -3,6 +3,7 @@
     <string name="Movie">Movie</string>
     <string name="cinema">cinema</string>
     <string name="favorite">favorite</string>
+    <string name="welcome_to_cinema_booking">Welcome to Cinema Booking</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="cinema_fragment">cinema fragment</string>
