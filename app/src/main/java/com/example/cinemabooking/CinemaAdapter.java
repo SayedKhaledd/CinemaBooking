@@ -14,21 +14,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.cinemabooking.Model.Cinema;
 
 import java.util.ArrayList;
 
 public class CinemaAdapter extends RecyclerView.Adapter<CinemaAdapter.ViewHolder> {
     private static final String TAG = "RecyclerViewAdapter";
-    private ArrayList<String> mImagenames = new ArrayList<>();
-    private ArrayList<String> mImages = new ArrayList<>();
-    private ArrayList<String> mAddress = new ArrayList<>();
+    private ArrayList<Cinema> mImagenames = new ArrayList<>();
+CinemaOnclicklistener cinemaOnclicklistener;
     private Context mContext;
 
-    public CinemaAdapter(Context mContext, ArrayList<String> mImagenames, ArrayList<String> mImages, ArrayList<String> mAddress) {
+    public CinemaAdapter(Context mContext, ArrayList<Cinema> mImagenames,CinemaOnclicklistener cinemaOnclicklistener) {
         this.mImagenames = mImagenames;
-        this.mImages = mImages;
         this.mContext = mContext;
-        this.mAddress = mAddress;
+        this.cinemaOnclicklistener = cinemaOnclicklistener;
     }
 
     @Override
@@ -41,17 +40,10 @@ public class CinemaAdapter extends RecyclerView.Adapter<CinemaAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull  ViewHolder holder, int position) {
         Log.d(TAG,"onBindViewHolder: called");
-        Glide.with(mContext).asBitmap().load(mImages.get(position)).into(holder.image);
-        holder.imagename.setText(mImagenames.get(position));
-        holder.address.setText(mAddress.get(position));
-        holder.parent_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: clicked on:"+ mImagenames.get(position));
-                Toast.makeText(mContext, mImagenames.get(position), Toast.LENGTH_SHORT).show();
+        Glide.with(mContext).asBitmap().load(mImagenames.get(position).getImage()).into(holder.image);
+        holder.imagename.setText(mImagenames.get(position).getName());
+        holder.address.setText(mImagenames.get(position).getAddress());
 
-            }
-        });
     }
 
     @Override
@@ -70,7 +62,13 @@ public class CinemaAdapter extends RecyclerView.Adapter<CinemaAdapter.ViewHolder
             imagename = itemView.findViewById(R.id.image_name);
             address = itemView.findViewById(R.id.address);
             parent_layout = itemView.findViewById(R.id.parent_layout);
-
+            parent_layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Cinema cinema =mImagenames.get(getAdapterPosition());
+                    cinemaOnclicklistener.cinemaOnClickListener(cinema);
+                }
+            });
         }
     }
 }

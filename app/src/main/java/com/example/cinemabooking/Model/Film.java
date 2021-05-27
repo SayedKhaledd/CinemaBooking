@@ -1,11 +1,25 @@
 package com.example.cinemabooking.Model;
 
-public class Film {
-    private String name , description;
+import java.io.Serializable;
 
-    public Film(String name, String description) {
+public class Film implements Serializable {
+    private String name , imageUML,description;
+
+    public Film(){}
+
+
+
+    public Film(String name, String imageUML) {
         this.name = name;
-        this.description = description;
+        this.imageUML = imageUML;
+    }
+
+    public String getImageUML() {
+        return imageUML;
+    }
+
+    public void setImageUML(String imageUML) {
+        this.imageUML = imageUML;
     }
 
     public String getName() {

@@ -40,7 +40,7 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.MyViewHolder> 
         Film film = films.get(position);
         holder.name.setText(film.getName());
 
-        holder.description.setText(film.getDescription());
+
     }
 
     @Override
