@@ -6,18 +6,23 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.accounts.Account;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
-    Button button;
+    Button button ;
+    Dialog dialog;
     BottomNavigationView bottomNavigationView;
 
     @Override
@@ -35,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             Log.d("Main Activity:", "on create");
 
         }
+
+        dialog =new Dialog(this);
     }
 
 
@@ -68,8 +75,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.account_menu:
-               /* Intent intent = new Intent(MainActivity.this, Account.class);
-                startActivity(intent);*/
+               showDialog();
                 return true;
             case R.id.search_menu:
                 Intent intent2 = new Intent(MainActivity.this, Search.class);
@@ -78,6 +84,22 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 
         return false;
+    }
+    public void showDialog(){
+dialog.setContentView(R.layout.dialog_logout);
+dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView imageViewDio =dialog.findViewById(R.id.image_dialog);
+        Button dialogLogOut=dialog.findViewById(R.id.dialog_logout);
+
+        dialogLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(getApplicationContext(),Login.class);
+                startActivity(intent);
+            }
+
+        });
+dialog.show();
     }
 
 }

@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.CinemaBooking" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">#B71C1C</item>
+        <item name="colorPrimaryVariant">#D0850D0D</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -15,6 +15,7 @@
     </style>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <style name="Theme.CinemaBooking.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    
     <style name="Theme.CinemaBooking.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -24,8 +25,8 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryDark">@color/purple_700</item>
-        <item name="colorAccent">@color/black</item>
+        <item name="colorPrimary">#D37375</item>
+        <item name="colorPrimaryDark">#AC393B</item>
+        <item name="colorAccent">#F5D717</item>
     </style>
 </resources>
