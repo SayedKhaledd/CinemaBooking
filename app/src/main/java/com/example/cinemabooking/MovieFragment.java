@@ -79,6 +79,7 @@ public class MovieFragment extends Fragment implements FilmOnClickListener {
 
         return view;
     }
+
     private void initImageBitmaps(){
 
 

@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide;
 import com.example.cinemabooking.Model.Cinema;
 import com.example.cinemabooking.Model.Film;
 
-public class CinemaInfo extends AppCompatActivity {
+public class CinemaInfo extends AppCompatActivity implements CinemaOnclicklistener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,9 +18,15 @@ public class CinemaInfo extends AppCompatActivity {
 
         Intent i = getIntent();
         Cinema cinema = (Cinema) i.getSerializableExtra("MovieFragment");
+
         if(cinema !=null){
             //nothing
             //write what you want do
         }
+    }
+
+    @Override
+    public void cinemaOnClickListener(Cinema cinema) {
+
     }
 }
