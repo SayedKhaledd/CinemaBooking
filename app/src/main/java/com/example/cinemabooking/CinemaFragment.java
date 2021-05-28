@@ -95,6 +95,12 @@ public class CinemaFragment extends Fragment implements CinemaOnclicklistener {
         cinemaList.add(new Cinema("Hilton Ramses Cinema"
                 ,"The Commercial Annex of Hilton Ramses Building, El-Shaheed Abdel Moneim Riyad Square - Downtown",
                 "https://media.filbalad.com/Places/logos/Large/944_hiltonramsis-cinema.png"));
+        cinemaList.get(0).setGeo(30.07423037801673,31.343892538623045);
+        cinemaList.get(1).setGeo(30.051745465669406, 31.24137311662314);
+        cinemaList.get(2).setGeo(30.05504588664474, 31.244142204180953);
+        cinemaList.get(3).setGeo(30.018237788549214, 31.223409044657256);
+        cinemaList.get(4).setGeo(30.0514063078594, 31.23271481926267);
+
 
         intRecyclerView();
     }

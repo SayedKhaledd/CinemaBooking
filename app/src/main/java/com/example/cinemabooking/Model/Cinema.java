@@ -6,12 +6,29 @@ public class Cinema implements Serializable {
     private String name ;
     private String address ;
     private String image ;
-
+private double latitude ;
+private double longitude ;
 
     public Cinema(String name, String address, String image) {
         this.name = name;
         this.address = address;
         this.image = image;
+    }
+
+
+
+    public void setGeo(double latitude,double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
     }
 
     public String getName() {

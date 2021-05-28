@@ -5,7 +5,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,7 +18,9 @@ import com.example.cinemabooking.Model.Film;
 
 import java.util.ArrayList;
 
-public class CinemaInfo extends AppCompatActivity implements FilmOnClickListener {
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class CinemaInfo extends AppCompatActivity implements FilmOnClickListener, View.OnClickListener {
 
 
 
@@ -24,16 +28,21 @@ public class CinemaInfo extends AppCompatActivity implements FilmOnClickListener
     TextView CinemaName;
     TextView Address;
     private ArrayList<Film> filmList = new ArrayList<>();
-    @Override
+
+    Cinema cinema;
+    CircleImageView circleImageLocation;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cinema_info);
         ImageViewCinema = findViewById(R.id.image_cinema);
         CinemaName = findViewById(R.id.cinema_name);
         Address = findViewById(R.id.address);
+        circleImageLocation =findViewById(R.id.location_button);
+        circleImageLocation.setOnClickListener(this);
         Intent i = getIntent();
 
-        Cinema cinema = (Cinema) i.getSerializableExtra("CinemaFragment");
+
+         cinema = (Cinema) i.getSerializableExtra("CinemaFragment");
 
         if(cinema !=null){
             CinemaName.setText(cinema.getName());
@@ -82,6 +91,14 @@ public class CinemaInfo extends AppCompatActivity implements FilmOnClickListener
     public void filmAddOnClickListener(Film film) {
         Intent intent =new Intent(getApplicationContext(),FilmInfo.class);
         intent.putExtra("MovieFragment",film);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Uri gmmIntentUri= Uri.parse("geo:"+cinema.getLatitude()+","+cinema.getLongitude());
+        Intent intent = new Intent((Intent.ACTION_VIEW),gmmIntentUri);
+
         startActivity(intent);
     }
 }

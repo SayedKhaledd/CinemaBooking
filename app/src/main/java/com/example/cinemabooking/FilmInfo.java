@@ -66,9 +66,11 @@ TextView title;
 
 
     private void initImageBitmaps(){
-        cinemaList.add(new Cinema("City Stars Cinema",
+        cinemaList.add(
+                new Cinema("City Stars Cinema",
                 "Omar Ibn Al Khattab Street - City Stars Mall - The 5th floor - Nasr City",
-                "https://assets.cairo360.com/app/uploads/2016/07/starscinema-211x211-1482419807.png"));
+                "https://assets.cairo360.com/app/uploads/2016/07/starscinema-211x211-1482419807.png")
+                  );
         cinemaList.add(new Cinema("Cairo Metro Cinema",
                 "35 Talaat Harb Street - Downtown ",
                 "https://media.elcinema.com/uploads/_310x310_77c85d4c88a249517eb4b6a0787729a6accb6cb28888949b55ed88d52d5b738a.jpg"));
@@ -83,6 +85,10 @@ TextView title;
         cinemaList.add(new Cinema("Hilton Ramses Cinema"
                 ,"The Commercial Annex of Hilton Ramses Building, El-Shaheed Abdel Moneim Riyad Square - Downtown",
                 "https://media.filbalad.com/Places/logos/Large/944_hiltonramsis-cinema.png"));
+
+
+
+
 
         for (int i=0;i<cinemaList.size();i++)
         {
