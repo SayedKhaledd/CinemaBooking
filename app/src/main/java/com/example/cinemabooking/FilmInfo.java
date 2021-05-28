@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,6 +23,8 @@ import com.bumptech.glide.Glide;
 import com.example.cinemabooking.Model.Cinema;
 import com.example.cinemabooking.Model.Film;
 import com.example.cinemabooking.Model.MovieCinemaSchedule;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,12 +37,13 @@ import java.util.GregorianCalendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class FilmInfo extends AppCompatActivity implements MovieCinemaClickListenter , View.OnClickListener {
+public class FilmInfo extends AppCompatActivity implements MovieCinemaClickListenter , View.OnClickListener, OnLikeListener {
 ImageView imageViewFilm;
 TextView title;
     String vId;
     CircleImageView circleImageView ;
     Film film;
+    LikeButton likeButton;
     private ArrayList<Cinema> cinemaList = new ArrayList<>();
     private ArrayList<MovieCinemaSchedule> movieCinemaSchedules = new ArrayList<>();
 
@@ -58,6 +62,8 @@ TextView title;
 
         }
         circleImageView.setOnClickListener(this);
+likeButton= (LikeButton)findViewById(R.id.heart_button);
+likeButton.setOnLikeListener(this);
 
         initImageBitmaps();
         extractFilms();
@@ -179,5 +185,16 @@ TextView title;
         Intent intent =new Intent(getApplicationContext(),Booking.class);
         intent.putExtra("FilmInfo",movieCinemaSchedule);
         startActivity(intent);
+    }
+
+    @Override
+    public void liked(LikeButton likeButton) {
+        //write to add  to favorite
+        Toast.makeText(getApplicationContext(),"added",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void unLiked(LikeButton likeButton) {
+//write to move  to favorite
     }
 }
