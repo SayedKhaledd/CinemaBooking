@@ -170,6 +170,8 @@ TextView title;
 
     @Override
     public void movieCinemaOnClickListener(MovieCinemaSchedule movieCinemaSchedule) {
-
+        Intent intent =new Intent(getApplicationContext(),Booking.class);
+        intent.putExtra("FilmInfo",movieCinemaSchedule);
+        startActivity(intent);
     }
 }

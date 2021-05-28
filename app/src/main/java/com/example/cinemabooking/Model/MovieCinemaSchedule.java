@@ -1,9 +1,10 @@
 package com.example.cinemabooking.Model;
 
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class MovieCinemaSchedule {
+public class MovieCinemaSchedule implements Serializable {
      Film movie;
     Cinema Cinema;
     Date mdate ;

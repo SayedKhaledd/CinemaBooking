@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CinemaBooking">
-        <activity android:name=".CinemaInfo"></activity>
+        <activity android:name=".Booking"></activity>
+        <activity android:name=".CinemaInfo" />
         <activity android:name=".FilmInfo" />
         <activity
             android:name=".Search"

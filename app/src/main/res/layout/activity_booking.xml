@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/mixed_colors_shape"
+    tools:context=".Booking">
+
+
+    <ImageView
+        android:id="@+id/image_movie"
+        android:layout_width="150dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="257dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/film"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_cinema" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/image_cinema"
+        android:layout_width="150dp"
+        android:layout_height="120dp"
+        android:scaleType="centerCrop"
+        app:civ_border_color="#DCBD22"
+        app:civ_border_width="10dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="283dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.026"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/cinema_name_booking"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Spider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.088"
+        app:layout_constraintStart_toEndOf="@+id/image_cinema"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/address_booking"
+        android:layout_width="0dp"
+
+        android:layout_height="75dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="address"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/image_cinema"
+        app:layout_constraintTop_toBottomOf="@+id/cinema_name_booking" />
+
+    <TextView
+        android:id="@+id/moviee_name_booking"
+        android:layout_width="0dp"
+        android:layout_height="108dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
+        android:gravity="center"
+        android:text="Bat Man "
+        android:textColor="#DCBD22"
+        android:textSize="30dp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/image_movie"
+        app:layout_constraintTop_toBottomOf="@+id/address_booking" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Available Seats"
+        android:textColor="#0F133A"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/image_movie"
+        app:layout_constraintTop_toBottomOf="@+id/moviee_name_booking" />
+
+    <TextView
+        android:id="@+id/num_of_seats_booking"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="8"
+        android:textColor="@color/red"
+
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/image_movie"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/minus"
+        android:layout_width="30dp"
+        android:layout_height="45dp"
+
+        android:layout_marginTop="68dp"
+        android:background="@drawable/button_shape"
+        android:backgroundTint="@color/red"
+        android:text="-"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.349"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/num_of_seats_booking"
+        app:layout_constraintVertical_bias="0.073" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/plus"
+        android:layout_width="30dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="68dp"
+        android:background="@drawable/button_shape"
+        android:backgroundTint="@color/red"
+        android:text="+"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.655"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/num_of_seats_booking"
+        app:layout_constraintVertical_bias="0.073" />
+
+    <TextView
+        android:id="@+id/counter"
+        android:layout_width="39dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="68dp"
+        android:text="1"
+        android:textColor="@color/red"
+        android:textSize="20dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/num_of_seats_booking"
+        app:layout_constraintVertical_bias="0.081" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/booking_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/button_shape"
+        android:backgroundTint="@color/red"
+        android:text="Booking"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/counter" />
+
+    <TextView
+        android:id="@+id/price_booking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="90 L.E"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.108"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_movie" />
+
+    <TextView
+        android:id="@+id/totalprice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="Total price:"
+        app:layout_constraintBottom_toTopOf="@+id/booking_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/counter"
+        app:layout_constraintVertical_bias="0.672" />
+</androidx.constraintlayout.widget.ConstraintLayout>
