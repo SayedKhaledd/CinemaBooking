@@ -7,6 +7,7 @@ public class Cinema implements Serializable {
     private String address ;
     private String image ;
 
+
     public Cinema(String name, String address, String image) {
         this.name = name;
         this.address = address;

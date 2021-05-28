@@ -21,22 +21,27 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.cinemabooking.Model.Cinema;
 import com.example.cinemabooking.Model.Film;
+import com.example.cinemabooking.Model.MovieCinemaSchedule;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class FilmInfo extends AppCompatActivity implements CinemaOnclicklistener , View.OnClickListener {
+public class FilmInfo extends AppCompatActivity implements MovieCinemaClickListenter , View.OnClickListener {
 ImageView imageViewFilm;
 TextView title;
     String vId;
     CircleImageView circleImageView ;
-
+    Film film;
     private ArrayList<Cinema> cinemaList = new ArrayList<>();
+    private ArrayList<MovieCinemaSchedule> movieCinemaSchedules = new ArrayList<>();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +51,7 @@ TextView title;
         imageViewFilm =findViewById(R.id.imageViewInf);
         circleImageView=(CircleImageView)findViewById(R.id.play_image);
         Intent i = getIntent();
-        Film film = (Film) i.getSerializableExtra("MovieFragment");
+         film = (Film) i.getSerializableExtra("MovieFragment");
         if(film !=null){
         title.setText(film.getName());
         Glide.with(this).asBitmap().load(film.getImageUML()).into(imageViewFilm);
@@ -79,21 +84,29 @@ TextView title;
                 ,"The Commercial Annex of Hilton Ramses Building, El-Shaheed Abdel Moneim Riyad Square - Downtown",
                 "https://media.filbalad.com/Places/logos/Large/944_hiltonramsis-cinema.png"));
 
+        for (int i=0;i<cinemaList.size();i++)
+        {
+            Calendar calendar= new GregorianCalendar();
+            calendar.set(Calendar.HOUR,(int)(Math.random()*100)%24);
+            calendar.set(Calendar.MINUTE,25);
+            calendar.set(calendar.DAY_OF_WEEK,i%7);
+
+
+            movieCinemaSchedules.add(new MovieCinemaSchedule(film,cinemaList.get(i),calendar.getTime(),5,(int)(Math.random()*100)+50));
+        }
+
         intRecyclerView();
     }
     private void intRecyclerView(){
         RecyclerView recyclerView = findViewById(R.id.cinema_recycler_view_info_film);
-        CinemaAdapter adapter = new CinemaAdapter(getApplicationContext(), cinemaList,this);
+        MovieCinemaScheduleAdapter adapter = new MovieCinemaScheduleAdapter(getApplicationContext(), movieCinemaSchedules,this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         //GridView
         // recyclerView.setLayoutManager (new GridLayoutManager(getContext(), 3));
     }
 
-    @Override
-    public void cinemaOnClickListener(Cinema cinema) {
-        //nothing
-    }
+
 
     @Override
     public void onClick(View v) {
@@ -155,4 +168,8 @@ TextView title;
     }
 
 
+    @Override
+    public void movieCinemaOnClickListener(MovieCinemaSchedule movieCinemaSchedule) {
+
+    }
 }

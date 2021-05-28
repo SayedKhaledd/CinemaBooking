@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp"
+    android:id="@+id/parent_layout">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/image1"
+        android:src="@mipmap/ic_launcher" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Test"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:id="@+id/image_name1"
+        android:layout_toRightOf="@id/image1"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp" />
+    <TextView
+        android:id="@+id/address1"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:text="addres"
+        android:textColor="#AA823D"
+        android:textSize="13sp"
+        android:layout_toRightOf="@id/image1"
+        android:layout_marginLeft="10dp"
+        android:paddingTop="5dp"
+        android:layout_marginTop="20dp"
+
+        />
+
+    <TextView
+        android:id="@+id/time1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="14dp"
+        android:layout_marginRight="24dp"
+android:gravity="center"
+        android:text="24 : 00 "
+        android:textColor="#AA823D"/>
+
+    <TextView
+        android:id="@+id/price1"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+
+        android:layout_below="@+id/time1"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="24dp"
+        android:gravity="center"
+        android:text="80 L.E"
+        android:textColor="#AA823D"
+        android:textSize="13sp" />
+</RelativeLayout>
