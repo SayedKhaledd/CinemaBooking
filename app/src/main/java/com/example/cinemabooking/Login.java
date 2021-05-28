@@ -16,6 +16,8 @@ TextView skip,signup;
         skip =findViewById(R.id.skip);
         signup =findViewById(R.id.sign_up);
         skip.setOnClickListener(this);
+        signup.setOnClickListener(this);
+
     }
 
     @Override
