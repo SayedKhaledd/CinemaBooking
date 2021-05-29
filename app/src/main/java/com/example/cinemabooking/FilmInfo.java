@@ -37,11 +37,11 @@ import java.util.GregorianCalendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class FilmInfo extends AppCompatActivity implements MovieCinemaClickListenter , View.OnClickListener, OnLikeListener {
-ImageView imageViewFilm;
-TextView title;
+public class FilmInfo extends AppCompatActivity implements MovieCinemaClickListenter, View.OnClickListener, OnLikeListener {
+    ImageView imageViewFilm;
+    TextView title;
     String vId;
-    CircleImageView circleImageView ;
+    CircleImageView circleImageView;
     Film film;
     LikeButton likeButton;
     private ArrayList<Cinema> cinemaList = new ArrayList<>();
@@ -51,19 +51,19 @@ TextView title;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_film_info);
 
-        title =findViewById(R.id.textView2);
-        imageViewFilm =findViewById(R.id.imageViewInf);
-        circleImageView=(CircleImageView)findViewById(R.id.play_image);
+        title = findViewById(R.id.textView2);
+        imageViewFilm = findViewById(R.id.imageViewInf);
+        circleImageView = (CircleImageView) findViewById(R.id.play_image);
         Intent i = getIntent();
-         film = (Film) i.getSerializableExtra("MovieFragment");
-        if(film !=null){
-        title.setText(film.getName());
-        Glide.with(this).asBitmap().load(film.getImageUML()).into(imageViewFilm);
+        film = (Film) i.getSerializableExtra("MovieFragment");
+        if (film != null) {
+            title.setText(film.getName());
+            Glide.with(this).asBitmap().load(film.getImageUML()).into(imageViewFilm);
 
         }
         circleImageView.setOnClickListener(this);
-likeButton= (LikeButton)findViewById(R.id.heart_button);
-likeButton.setOnLikeListener(this);
+        likeButton = (LikeButton) findViewById(R.id.heart_button);
+        likeButton.setOnLikeListener(this);
 
         initImageBitmaps();
         extractFilms();
@@ -71,12 +71,12 @@ likeButton.setOnLikeListener(this);
     }
 
 
-    private void initImageBitmaps(){
+    private void initImageBitmaps() {
         cinemaList.add(
                 new Cinema("City Stars Cinema",
-                "Omar Ibn Al Khattab Street - City Stars Mall - The 5th floor - Nasr City",
-                "https://assets.cairo360.com/app/uploads/2016/07/starscinema-211x211-1482419807.png")
-                  );
+                        "Omar Ibn Al Khattab Street - City Stars Mall - The 5th floor - Nasr City",
+                        "https://assets.cairo360.com/app/uploads/2016/07/starscinema-211x211-1482419807.png")
+        );
         cinemaList.add(new Cinema("Cairo Metro Cinema",
                 "35 Talaat Harb Street - Downtown ",
                 "https://media.elcinema.com/uploads/_310x310_77c85d4c88a249517eb4b6a0787729a6accb6cb28888949b55ed88d52d5b738a.jpg"));
@@ -86,32 +86,29 @@ likeButton.setOnLikeListener(this);
 
 
         cinemaList.add(new Cinema("Galaxy Cinema"
-                ,"Abdul Aziz Al Saud Street - Manial Al-Rawda",
+                , "Abdul Aziz Al Saud Street - Manial Al-Rawda",
                 "https://media-exp1.licdn.com/dms/image/C560BAQG2JSNNKC-M7g/company-logo_200_200/0/1561753326625?e=2159024400&v=beta&t=TPo293PrmPD7JeJYH4p1DrYkjwhHlCK6B652oI_-NVU"));
         cinemaList.add(new Cinema("Hilton Ramses Cinema"
-                ,"The Commercial Annex of Hilton Ramses Building, El-Shaheed Abdel Moneim Riyad Square - Downtown",
+                , "The Commercial Annex of Hilton Ramses Building, El-Shaheed Abdel Moneim Riyad Square - Downtown",
                 "https://media.filbalad.com/Places/logos/Large/944_hiltonramsis-cinema.png"));
 
 
+        for (int i = 0; i < cinemaList.size(); i++) {
+            Calendar calendar = new GregorianCalendar();
+            calendar.set(Calendar.HOUR, (int) (Math.random() * 100) % 24);
+            calendar.set(Calendar.MINUTE, 25);
+            calendar.set(calendar.DAY_OF_WEEK, i % 7);
 
 
-
-        for (int i=0;i<cinemaList.size();i++)
-        {
-            Calendar calendar= new GregorianCalendar();
-            calendar.set(Calendar.HOUR,(int)(Math.random()*100)%24);
-            calendar.set(Calendar.MINUTE,25);
-            calendar.set(calendar.DAY_OF_WEEK,i%7);
-
-
-            movieCinemaSchedules.add(new MovieCinemaSchedule(film,cinemaList.get(i),calendar.getTime(),5,(int)(Math.random()*100)+50));
+            movieCinemaSchedules.add(new MovieCinemaSchedule(film, cinemaList.get(i), calendar.getTime(), 5, (int) (Math.random() * 100) + 50));
         }
 
         intRecyclerView();
     }
-    private void intRecyclerView(){
+
+    private void intRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.cinema_recycler_view_info_film);
-        MovieCinemaScheduleAdapter adapter = new MovieCinemaScheduleAdapter(getApplicationContext(), movieCinemaSchedules,this);
+        MovieCinemaScheduleAdapter adapter = new MovieCinemaScheduleAdapter(getApplicationContext(), movieCinemaSchedules, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         //GridView
@@ -119,21 +116,19 @@ likeButton.setOnLikeListener(this);
     }
 
 
-
     @Override
     public void onClick(View v) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW);
-        browserIntent.setData(Uri.parse( "https://youtu.be/"+vId));
+        browserIntent.setData(Uri.parse("https://youtu.be/" + vId));
         startActivity(browserIntent);
     }
 
     private void extractFilms() {
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&q="+
-                formatUrl(title.getText().toString()+"trailer")
-                +"&key=AIzaSyCUk_aWpY0xipuc7WSjLgpFfJquHS8hsJA";
-
+        String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=" +
+                formatUrl(title.getText().toString() + "trailer")
+                + "&key=AIzaSyCUk_aWpY0xipuc7WSjLgpFfJquHS8hsJA";
 
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -142,13 +137,13 @@ likeButton.setOnLikeListener(this);
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            JSONArray results =   response.getJSONArray("items");
+                            JSONArray results = response.getJSONArray("items");
 
-                                JSONObject filmObj =results.getJSONObject(0);
-                                Film film =new Film();
+                            JSONObject filmObj = results.getJSONObject(0);
+                            Film film = new Film();
                             JSONObject idObj = filmObj.getJSONObject("id");
-                           vId=  idObj.getString("videoId");
-                            Log.d("tag"+"25", vId);
+                            vId = idObj.getString("videoId");
+                            Log.d("tag" + "25", vId);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -168,12 +163,12 @@ likeButton.setOnLikeListener(this);
 
     private String formatUrl(String s) {
         String x = "";
-        String[] a =s.split(" ");
+        String[] a = s.split(" ");
         for (int i = 0; i < a.length; i++) {
 
-          x= x+ a[i];
-            if(i !=a.length-1)
-                x= x+ "%20";
+            x = x + a[i];
+            if (i != a.length - 1)
+                x = x + "%20";
 
         }
         return x;
@@ -182,15 +177,15 @@ likeButton.setOnLikeListener(this);
 
     @Override
     public void movieCinemaOnClickListener(MovieCinemaSchedule movieCinemaSchedule) {
-        Intent intent =new Intent(getApplicationContext(),Booking.class);
-        intent.putExtra("FilmInfo",movieCinemaSchedule);
+        Intent intent = new Intent(getApplicationContext(), Booking.class);
+        intent.putExtra("FilmInfo", movieCinemaSchedule);
         startActivity(intent);
     }
 
     @Override
     public void liked(LikeButton likeButton) {
         //write to add  to favorite
-        Toast.makeText(getApplicationContext(),"added",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "added", Toast.LENGTH_SHORT).show();
     }
 
     @Override

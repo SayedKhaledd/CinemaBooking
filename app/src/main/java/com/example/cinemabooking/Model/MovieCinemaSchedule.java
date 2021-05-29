@@ -5,14 +5,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class MovieCinemaSchedule implements Serializable {
-     Film movie;
+    Film movie;
     Cinema Cinema;
-    Date mdate ;
+    Date mdate;
     int numOfEmptySeats;
     int price;
 
     public MovieCinemaSchedule(Film movie, com.example.cinemabooking.Model.Cinema cinema,
-                               Date date, int numOfEmptySeats,int price) {
+                               Date date, int numOfEmptySeats, int price) {
         this.movie = movie;
         Cinema = cinema;
         this.mdate = date;

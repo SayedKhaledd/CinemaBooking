@@ -3,11 +3,11 @@ package com.example.cinemabooking.Model;
 import java.io.Serializable;
 
 public class Cinema implements Serializable {
-    private String name ;
-    private String address ;
-    private String image ;
-private double latitude ;
-private double longitude ;
+    private String name;
+    private String address;
+    private String image;
+    private double latitude;
+    private double longitude;
 
     public Cinema(String name, String address, String image) {
         this.name = name;
@@ -16,8 +16,7 @@ private double longitude ;
     }
 
 
-
-    public void setGeo(double latitude,double longitude) {
+    public void setGeo(double latitude, double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
 

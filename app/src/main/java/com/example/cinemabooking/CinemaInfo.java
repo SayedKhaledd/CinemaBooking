@@ -23,7 +23,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class CinemaInfo extends AppCompatActivity implements FilmOnClickListener, View.OnClickListener {
 
 
-
     ImageView ImageViewCinema;
     TextView CinemaName;
     TextView Address;
@@ -31,73 +30,75 @@ public class CinemaInfo extends AppCompatActivity implements FilmOnClickListener
 
     Cinema cinema;
     CircleImageView circleImageLocation;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cinema_info);
         ImageViewCinema = findViewById(R.id.image_cinema);
         CinemaName = findViewById(R.id.cinema_name);
         Address = findViewById(R.id.address);
-        circleImageLocation =findViewById(R.id.location_button);
+        circleImageLocation = findViewById(R.id.location_button);
         circleImageLocation.setOnClickListener(this);
         Intent i = getIntent();
 
 
-         cinema = (Cinema) i.getSerializableExtra("CinemaFragment");
+        cinema = (Cinema) i.getSerializableExtra("CinemaFragment");
 
-        if(cinema !=null){
+        if (cinema != null) {
             CinemaName.setText(cinema.getName());
             Address.setText(cinema.getAddress());
             Glide.with(this).asBitmap().load(cinema.getImage()).into(ImageViewCinema);
         }
         initImageBitmaps();
     }
-    private void initImageBitmaps(){
 
+    private void initImageBitmaps() {
 
 
         filmList.add(new Film("The shawshank redemption",
                 "https://images-na.ssl-images-amazon.com/images/I/519NBNHX5BL._SY445_.jpg"));
 
         filmList.add(new Film("JOKER"
-                ,"https://m.media-amazon.com/images/M/MV5BNGVjNWI4ZGUtNzE0MS00YTJmLWE0ZDctN2ZiYTk2YmI3NTYyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_.jpg"));
+                , "https://m.media-amazon.com/images/M/MV5BNGVjNWI4ZGUtNzE0MS00YTJmLWE0ZDctN2ZiYTk2YmI3NTYyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_.jpg"));
         filmList.add(new Film("Grave of the fireflies",
                 "https://www.reelviews.net/resources/img/posters/thumbs/grave_poster.jpg"));
 
 
-        filmList.add(new Film("Avengers Endgame" ,
+        filmList.add(new Film("Avengers Endgame",
                 "https://images-na.ssl-images-amazon.com/images/I/71niXI3lxlL._AC_SY679_.jpg"));
 
 
-        filmList.add(new Film("Violet Evergarden","https://i.redd.it/pkk9guou7ot41.jpg"));
+        filmList.add(new Film("Violet Evergarden", "https://i.redd.it/pkk9guou7ot41.jpg"));
 
         filmList.add(new Film("Lord of the rings",
                 "https://images-na.ssl-images-amazon.com/images/I/51uKITEiT1L._AC_.jpg"));
 
 
-        filmList.add(new Film("Inception","https://movieposters2.com/images/704089-b.jpg"));
+        filmList.add(new Film("Inception", "https://movieposters2.com/images/704089-b.jpg"));
         intRecyclerView();
     }
-    private void intRecyclerView(){
+
+    private void intRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.film_recycler_view_info_cinema);
-        MoviesAdapter adapter = new MoviesAdapter(getApplicationContext(),filmList,this);
+        MoviesAdapter adapter = new MoviesAdapter(getApplicationContext(), filmList, this);
         recyclerView.setAdapter(adapter);
         //recyclerView.setLayoutManager(new LinearLayoutManager(this));
         //GridView
-        recyclerView.setLayoutManager (new GridLayoutManager(getApplicationContext(), 3));
+        recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 3));
     }
 
 
     @Override
     public void filmAddOnClickListener(Film film) {
-        Intent intent =new Intent(getApplicationContext(),FilmInfo.class);
-        intent.putExtra("MovieFragment",film);
+        Intent intent = new Intent(getApplicationContext(), FilmInfo.class);
+        intent.putExtra("MovieFragment", film);
         startActivity(intent);
     }
 
     @Override
     public void onClick(View v) {
-        Uri gmmIntentUri= Uri.parse("geo:"+cinema.getLatitude()+","+cinema.getLongitude());
-        Intent intent = new Intent((Intent.ACTION_VIEW),gmmIntentUri);
+        Uri gmmIntentUri = Uri.parse("geo:" + cinema.getLatitude() + "," + cinema.getLongitude());
+        Intent intent = new Intent((Intent.ACTION_VIEW), gmmIntentUri);
 
         startActivity(intent);
     }
