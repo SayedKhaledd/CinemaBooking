@@ -15,7 +15,7 @@ import com.example.cinemabooking.Model.MovieCinemaSchedule;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Booking extends AppCompatActivity implements View.OnClickListener {
+public class BookingActivity extends AppCompatActivity implements View.OnClickListener {
     TextView price, cinemaName, cinemaAddress, numOfSeats, counter, totalPrice, movieName;
     Button plus, mins, booking;
     ImageView movieImage;
@@ -47,10 +47,10 @@ public class Booking extends AppCompatActivity implements View.OnClickListener {
         price.setText(movieCinemaSchedule.getPrice() + "L.E");
         cinemaName.setText(movieCinemaSchedule.getCinema().getName());
         cinemaAddress.setText(movieCinemaSchedule.getCinema().getAddress());
-        numOfSeats.setText(movieCinemaSchedule.getNumOfEmptySeats()+"");
-        movieName.setText(movieCinemaSchedule.getMovie().getName());
-        Glide.with(this).asBitmap().load(movieCinemaSchedule.getMovie().getImageURL()).into(movieImage);
-        Glide.with(this).asBitmap().load(movieCinemaSchedule.getCinema().getImage()).into(circleImageCinema);
+        numOfSeats.setText(movieCinemaSchedule.getNumberofseats()+"");
+//        movieName.setText(movieCinemaSchedule.getMovie().getName());
+//        Glide.with(this).asBitmap().load(movieCinemaSchedule.getMovie().getImageURL()).into(movieImage);
+//        Glide.with(this).asBitmap().load(movieCinemaSchedule.getCinema().getImage()).into(circleImageCinema);
 
         plus.setOnClickListener(this);
         mins.setOnClickListener(this);
@@ -63,8 +63,8 @@ public class Booking extends AppCompatActivity implements View.OnClickListener {
         int x = Integer.parseInt(counter.getText().toString());
 
         if (v.getId() == R.id.plus) {
-            if(x==movieCinemaSchedule.getNumOfEmptySeats())
-            { Toast.makeText(getApplicationContext(),"max number is "+movieCinemaSchedule.getNumOfEmptySeats(),Toast.LENGTH_SHORT).show();
+            if(x==movieCinemaSchedule.getNumberofseats())
+            { Toast.makeText(getApplicationContext(),"max number is "+movieCinemaSchedule.getNumberofseats(),Toast.LENGTH_SHORT).show();
                 return;}
             counter.setText((x+1)+"");
 

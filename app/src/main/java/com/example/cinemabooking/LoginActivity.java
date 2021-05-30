@@ -2,8 +2,6 @@ package com.example.cinemabooking;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,7 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class Login extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     TextView skip, signup;
     EditText username, password;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -55,7 +53,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         } else if (v.getId() == R.id.sign_up) {
 
-            Intent intent = new Intent(this, Signup.class);
+            Intent intent = new Intent(this, SignupActivity.class);
             startActivity(intent);
         } else if (v.getId() == R.id.next_button) {
             user.setPassword(password.getText().toString());

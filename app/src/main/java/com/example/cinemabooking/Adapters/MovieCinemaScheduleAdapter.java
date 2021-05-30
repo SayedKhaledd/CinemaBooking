@@ -1,4 +1,4 @@
-package com.example.cinemabooking;
+package com.example.cinemabooking.Adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -13,7 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.cinemabooking.Listeners.MovieCinemaClickListenter;
 import com.example.cinemabooking.Model.MovieCinemaSchedule;
+import com.example.cinemabooking.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ public class MovieCinemaScheduleAdapter extends RecyclerView.Adapter<MovieCinema
     MovieCinemaClickListenter movieCinemaClickListenter;
     private Context mContext;
 
-    public MovieCinemaScheduleAdapter(Context mContext, ArrayList<MovieCinemaSchedule> mImagenames,MovieCinemaClickListenter movieCinemaClickListenterinemaOnclicklistener) {
+    public MovieCinemaScheduleAdapter(Context mContext, ArrayList<MovieCinemaSchedule> mImagenames, MovieCinemaClickListenter movieCinemaClickListenterinemaOnclicklistener) {
         this.movieCinema = mImagenames;
         this.mContext = mContext;
         this.movieCinemaClickListenter = movieCinemaClickListenterinemaOnclicklistener;
@@ -39,14 +41,13 @@ public class MovieCinemaScheduleAdapter extends RecyclerView.Adapter<MovieCinema
 
     @Override
     public void onBindViewHolder(@NonNull MovieCinemaScheduleAdapter.ViewHolder holder, int position) {
-        Log.d(TAG,"onBindViewHolder: called");
+        Log.d(TAG, "onBindViewHolder: called");
         Glide.with(mContext).asBitmap().load(movieCinema.get(position).getCinema().getImage()).into(holder.image);
         holder.imagename.setText(movieCinema.get(position).getCinema().getName());
         holder.address.setText(movieCinema.get(position).getCinema().getAddress());
-        SimpleDateFormat  formatter = new SimpleDateFormat("E,  HH:mm ");
-      String  strDate = formatter.format(movieCinema.get(position).getMdate());
+        String strDate = movieCinema.get(position).getDate();
         holder.time.setText(strDate);
-        holder.price.setText(movieCinema.get(position).getPrice()+"L.E");
+        holder.price.setText(movieCinema.get(position).getPrice() + "L.E");
     }
 
     @Override
@@ -54,11 +55,12 @@ public class MovieCinemaScheduleAdapter extends RecyclerView.Adapter<MovieCinema
         return movieCinema.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         TextView imagename;
-        TextView address,time,price;
+        TextView address, time, price;
         RelativeLayout parent_layout;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.image1);
@@ -70,7 +72,7 @@ public class MovieCinemaScheduleAdapter extends RecyclerView.Adapter<MovieCinema
             parent_layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MovieCinemaSchedule movieCinemaSchedule =movieCinema.get(getAdapterPosition());
+                    MovieCinemaSchedule movieCinemaSchedule = movieCinema.get(getAdapterPosition());
                     movieCinemaClickListenter.movieCinemaOnClickListener(movieCinemaSchedule);
                 }
             });

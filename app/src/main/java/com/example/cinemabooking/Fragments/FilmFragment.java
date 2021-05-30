@@ -14,9 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.cinemabooking.FilmInfoActivity;
-import com.example.cinemabooking.FilmOnClickListener;
+import com.example.cinemabooking.Listeners.FilmOnClickListener;
 import com.example.cinemabooking.Model.Film;
-import com.example.cinemabooking.MoviesAdapter;
+import com.example.cinemabooking.Adapters.MoviesAdapter;
 import com.example.cinemabooking.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -156,6 +156,8 @@ public class FilmFragment extends Fragment implements FilmOnClickListener {
 
         Intent intent = new Intent(getContext(), FilmInfoActivity.class);
         intent.putExtra("MovieFragment", film);
+        intent.putExtra("Filmindex",filmArrayList.indexOf(film)+1);
+        Log.d("TAG", "Filmindex in film fragment: "+filmArrayList.indexOf(film)+1);
         startActivity(intent);
     }
 }

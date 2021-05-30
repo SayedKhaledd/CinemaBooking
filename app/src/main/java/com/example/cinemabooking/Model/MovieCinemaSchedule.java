@@ -5,19 +5,63 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class MovieCinemaSchedule implements Serializable {
-    Film movie;
-    Cinema Cinema;
-    Date mdate;
-    int numOfEmptySeats;
+    String date;
+    int cinemaId, filmId;
+    int numberofseats;
     int price;
+    Cinema cinema;
 
-    public MovieCinemaSchedule(Film movie, com.example.cinemabooking.Model.Cinema cinema,
-                               Date date, int numOfEmptySeats, int price) {
-        this.movie = movie;
-        Cinema = cinema;
-        this.mdate = date;
+    public Cinema getCinema() {
+        return cinema;
+    }
+
+    public MovieCinemaSchedule() {
+    }
+
+    public MovieCinemaSchedule(String date, int cinemaId, int filmId, int numberofseats, int price, Cinema cinema) {
+        this.date = date;
+        this.cinemaId = cinemaId;
+        this.filmId = filmId;
+        this.numberofseats = numberofseats;
         this.price = price;
-        this.numOfEmptySeats = numOfEmptySeats;
+        this.cinema = cinema;
+    }
+
+    public void setCinema(Cinema cinema) {
+        this.cinema = cinema;
+    }
+
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public int getCinemaId() {
+        return cinemaId;
+    }
+
+    public void setCinemaId(int cinemaId) {
+        this.cinemaId = cinemaId;
+    }
+
+    public int getFilmId() {
+        return filmId;
+    }
+
+    public void setFilmId(int filmId) {
+        this.filmId = filmId;
+    }
+
+    public int getNumberofseats() {
+        return numberofseats;
+    }
+
+    public void setNumberofseats(int numberofseats) {
+        this.numberofseats = numberofseats;
     }
 
     public int getPrice() {
@@ -26,37 +70,5 @@ public class MovieCinemaSchedule implements Serializable {
 
     public void setPrice(int price) {
         this.price = price;
-    }
-
-    public Film getMovie() {
-        return movie;
-    }
-
-    public void setMovie(Film movie) {
-        this.movie = movie;
-    }
-
-    public com.example.cinemabooking.Model.Cinema getCinema() {
-        return Cinema;
-    }
-
-    public void setCinema(com.example.cinemabooking.Model.Cinema cinema) {
-        Cinema = cinema;
-    }
-
-    public Date getMdate() {
-        return mdate;
-    }
-
-    public void setMdate(Date mdate) {
-        this.mdate = mdate;
-    }
-
-    public int getNumOfEmptySeats() {
-        return numOfEmptySeats;
-    }
-
-    public void setNumOfEmptySeats(int numOfEmptySeats) {
-        this.numOfEmptySeats = numOfEmptySeats;
     }
 }

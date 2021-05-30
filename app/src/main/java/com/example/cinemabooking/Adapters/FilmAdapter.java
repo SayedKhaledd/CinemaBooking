@@ -1,4 +1,4 @@
-package com.example.cinemabooking;
+package com.example.cinemabooking.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,13 +7,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cinemabooking.Model.Film;
+import com.example.cinemabooking.R;
 
 import java.util.List;
 

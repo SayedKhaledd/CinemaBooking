@@ -1,5 +1,6 @@
 package com.example.cinemabooking;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,9 +21,16 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.cinemabooking.Adapters.MovieCinemaScheduleAdapter;
+import com.example.cinemabooking.Listeners.MovieCinemaClickListenter;
 import com.example.cinemabooking.Model.Cinema;
 import com.example.cinemabooking.Model.Film;
 import com.example.cinemabooking.Model.MovieCinemaSchedule;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
 
@@ -43,8 +51,14 @@ public class FilmInfoActivity extends AppCompatActivity implements MovieCinemaCl
     CircleImageView circleImageView;
     Film film;
     LikeButton likeButton;
-    private ArrayList<Cinema> cinemaList = new ArrayList<>();
     private ArrayList<MovieCinemaSchedule> movieCinemaSchedules = new ArrayList<>();
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myDatabase = database.getReference();
+    ArrayList<Integer> cinemaIndecies = new ArrayList<>();
+    RecyclerView recyclerView;
+    MovieCinemaScheduleAdapter adapter;
+
+    int filmIndex;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +74,9 @@ public class FilmInfoActivity extends AppCompatActivity implements MovieCinemaCl
             Glide.with(this).asBitmap().load(film.getImageURL()).into(imageViewFilm);
 
         }
+
+        filmIndex = (int) (i.getSerializableExtra("Filmindex"));
+        Log.d("TAG", "filmIndex: " + filmIndex);
         circleImageView.setOnClickListener(this);
         likeButton = (LikeButton) findViewById(R.id.heart_button);
         likeButton.setOnLikeListener(this);
@@ -71,43 +88,61 @@ public class FilmInfoActivity extends AppCompatActivity implements MovieCinemaCl
 
 
     private void initImageBitmaps() {
-        cinemaList.add(
-                new Cinema("City Stars Cinema",
-                        "Omar Ibn Al Khattab Street - City Stars Mall - The 5th floor - Nasr City",
-                        "https://assets.cairo360.com/app/uploads/2016/07/starscinema-211x211-1482419807.png")
-        );
-        cinemaList.add(new Cinema("Cairo Metro Cinema",
-                "35 Talaat Harb Street - Downtown ",
-                "https://media.elcinema.com/uploads/_310x310_77c85d4c88a249517eb4b6a0787729a6accb6cb28888949b55ed88d52d5b738a.jpg"));
-        cinemaList.add(new Cinema("Cosmos Cinema",
-                "12 Emad El-Din Street - Downtown",
-                "https://www.shorouknews.com/uploadedimages/Gallery/original/1873272.jpg"));
+        myDatabase.child("MovieCinemaSchedule").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot snap : snapshot.getChildren()) {
+                    MovieCinemaSchedule mySchedule = snap.getValue(MovieCinemaSchedule.class);
+                    if (mySchedule != null && mySchedule.getFilmId() == filmIndex) {
+                        cinemaIndecies.add(mySchedule.getCinemaId());
+                        movieCinemaSchedules.add(mySchedule);
+                    }
 
 
-        cinemaList.add(new Cinema("Galaxy Cinema"
-                , "Abdul Aziz Al Saud Street - Manial Al-Rawda",
-                "https://media-exp1.licdn.com/dms/image/C560BAQG2JSNNKC-M7g/company-logo_200_200/0/1561753326625?e=2159024400&v=beta&t=TPo293PrmPD7JeJYH4p1DrYkjwhHlCK6B652oI_-NVU"));
-        cinemaList.add(new Cinema("Hilton Ramses Cinema"
-                , "The Commercial Annex of Hilton Ramses Building, El-Shaheed Abdel Moneim Riyad Square - Downtown",
-                "https://media.filbalad.com/Places/logos/Large/944_hiltonramsis-cinema.png"));
+                }
+
+                Log.d("TAG", "finished ");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        myDatabase.child("Cinema").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int i = 0;
+                for (DataSnapshot snap : snapshot.getChildren()) {
+                    if (cinemaIndecies.contains(Integer.parseInt(snap.getKey()))) {
+                        Cinema mycinema = snap.getValue(Cinema.class);
+
+                        movieCinemaSchedules.get(i).setCinema(mycinema);
+                        i++;
+                    }
+                    adapter.notifyDataSetChanged();
 
 
-        for (int i = 0; i < cinemaList.size(); i++) {
-            Calendar calendar = new GregorianCalendar();
-            calendar.set(Calendar.HOUR, (int) (Math.random() * 100) % 24);
-            calendar.set(Calendar.MINUTE, 25);
-            calendar.set(calendar.DAY_OF_WEEK, i % 7);
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-            movieCinemaSchedules.add(new MovieCinemaSchedule(film, cinemaList.get(i), calendar.getTime(), 5, (int) (Math.random() * 100) + 50));
-        }
+            }
+        });
+
 
         intRecyclerView();
     }
 
     private void intRecyclerView() {
-        RecyclerView recyclerView = findViewById(R.id.cinema_recycler_view_info_film);
-        MovieCinemaScheduleAdapter adapter = new MovieCinemaScheduleAdapter(getApplicationContext(), movieCinemaSchedules, this);
+
+
+        recyclerView = findViewById(R.id.cinema_recycler_view_info_film);
+        adapter = new MovieCinemaScheduleAdapter(getApplicationContext(), movieCinemaSchedules, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         //GridView
@@ -176,7 +211,7 @@ public class FilmInfoActivity extends AppCompatActivity implements MovieCinemaCl
 
     @Override
     public void movieCinemaOnClickListener(MovieCinemaSchedule movieCinemaSchedule) {
-        Intent intent = new Intent(getApplicationContext(), Booking.class);
+        Intent intent = new Intent(getApplicationContext(), BookingActivity.class);
         intent.putExtra("FilmInfo", movieCinemaSchedule);
         startActivity(intent);
     }

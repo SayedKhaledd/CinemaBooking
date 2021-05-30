@@ -11,15 +11,15 @@
         android:roundIcon="@drawable/popcorn"
         android:supportsRtl="true"
         android:theme="@style/Theme.CinemaBooking">
-        <activity android:name=".Booking"></activity>
-        <activity android:name=".CinemaInfo" />
+        <activity android:name=".BookingActivity"></activity>
+        <activity android:name=".CinemaInfoActivity" />
         <activity android:name=".FilmInfoActivity" />
         <activity
             android:name=".Search"
             android:theme="@style/Theme.CinemaBooking.NoActionBar" />
-        <activity android:name=".Signup" />
+        <activity android:name=".SignupActivity" />
         <activity
-            android:name=".Login"
+            android:name=".LoginActivity"
             android:theme="@style/Theme.CinemaBooking.NoActionBar" />
         <activity
             android:name=".MainActivity"

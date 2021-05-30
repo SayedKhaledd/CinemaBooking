@@ -13,9 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.cinemabooking.CinemaAdapter;
-import com.example.cinemabooking.CinemaInfo;
-import com.example.cinemabooking.CinemaOnclicklistener;
+import com.example.cinemabooking.Adapters.CinemaAdapter;
+import com.example.cinemabooking.CinemaInfoActivity;
+import com.example.cinemabooking.Listeners.CinemaOnclicklistener;
 import com.example.cinemabooking.Model.Cinema;
 import com.example.cinemabooking.R;
 import com.google.firebase.database.DataSnapshot;
@@ -132,8 +132,10 @@ public class CinemaFragment extends Fragment implements CinemaOnclicklistener {
 
     @Override
     public void cinemaOnClickListener(Cinema cinema) {
-        Intent intent = new Intent(getContext(), CinemaInfo.class);
+        Intent intent = new Intent(getContext(), CinemaInfoActivity.class);
         intent.putExtra("CinemaFragment", cinema);
+        intent.putExtra("cinemaindex", cinemaList.indexOf(cinema)+1);
+
         startActivity(intent);
     }
 }

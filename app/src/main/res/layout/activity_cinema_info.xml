@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/mixed_colors_shape"
-    tools:context=".CinemaInfo">
+    tools:context=".CinemaInfoActivity">
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/image_cinema"
         android:layout_width="120dp"

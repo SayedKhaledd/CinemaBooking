@@ -1,4 +1,4 @@
-package com.example.cinemabooking;
+package com.example.cinemabooking.Adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,13 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.cinemabooking.Listeners.CinemaOnclicklistener;
 import com.example.cinemabooking.Model.Cinema;
+import com.example.cinemabooking.R;
 
 import java.util.ArrayList;
 

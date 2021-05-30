@@ -1,4 +1,4 @@
-package com.example.cinemabooking;
+package com.example.cinemabooking.Adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -13,7 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.cinemabooking.Listeners.FilmOnClickListener;
 import com.example.cinemabooking.Model.Film;
+import com.example.cinemabooking.R;
 
 import java.util.ArrayList;
 
