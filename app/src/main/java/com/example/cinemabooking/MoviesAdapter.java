@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,7 +38,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull  ViewHolder holder, int position) {
         Log.d(TAG,"onBindViewHolder: called");
-        Glide.with(mContext).asBitmap().load(mImagenames.get(position).getImageUML()).into(holder.image);
+        Glide.with(mContext).asBitmap().load(mImagenames.get(position).getImageURL()).into(holder.image);
         holder.imagename.setText(mImagenames.get(position).getName());
 
     }

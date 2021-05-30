@@ -118,7 +118,8 @@ public class Search extends AppCompatActivity implements TextWatcher {
                 int i = 0;
                 while ( list.size()!=i) {
 
-                    if (list.get(i).getName().contains(key) || list.get(i).getDescription().contains(key)) {
+                    if (    list.get(i).getName().contains(key) || list.get(i).getDescription().contains(key)   ) {
+
                         films.add(new Film(list.get(i).getName(),list.get(i).getDescription()));
 
                     }

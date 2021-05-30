@@ -13,7 +13,7 @@
         android:theme="@style/Theme.CinemaBooking">
         <activity android:name=".Booking"></activity>
         <activity android:name=".CinemaInfo" />
-        <activity android:name=".FilmInfo" />
+        <activity android:name=".FilmInfoActivity" />
         <activity
             android:name=".Search"
             android:theme="@style/Theme.CinemaBooking.NoActionBar" />

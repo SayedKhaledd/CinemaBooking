@@ -5,7 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
-import android.accounts.Account;
+import com.example.cinemabooking.Fragments.CinemaFragment;
+import com.example.cinemabooking.Fragments.FavoritesFragment;
+import com.example.cinemabooking.Fragments.FilmFragment;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -36,12 +44,38 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new MovieFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FilmFragment()).commit();
             Log.d("Main Activity:", "on create");
 
         }
 
         dialog =new Dialog(this);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference wq = database.getReference();
+        DatabaseReference databaseuser = database.getReference().child("User");
+
+
+        databaseuser.child("1").addValueEventListener(new ValueEventListener() {
+            private static final String TAG = "oncreate";
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Log.d(TAG, "onDataChange: "+dataSnapshot.getValue()  );
+
+
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+//                String value = dataSnapshot.getValue(String.class);
+                //   Log.d(TAG, "Value is: " + value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
     }
 
 
@@ -49,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment selectedFragment = null;
         if (item.getItemId() == R.id.page_1) {
-            selectedFragment = new MovieFragment();
+            selectedFragment = new FilmFragment();
             Log.d("Main Activity:", "Page 1");
         }
         else if (item.getItemId() == R.id.page_2) {

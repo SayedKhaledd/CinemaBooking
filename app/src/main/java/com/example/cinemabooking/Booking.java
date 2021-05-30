@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.cinemabooking.Model.Film;
 import com.example.cinemabooking.Model.MovieCinemaSchedule;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -50,7 +49,7 @@ public class Booking extends AppCompatActivity implements View.OnClickListener {
         cinemaAddress.setText(movieCinemaSchedule.getCinema().getAddress());
         numOfSeats.setText(movieCinemaSchedule.getNumOfEmptySeats()+"");
         movieName.setText(movieCinemaSchedule.getMovie().getName());
-        Glide.with(this).asBitmap().load(movieCinemaSchedule.getMovie().getImageUML()).into(movieImage);
+        Glide.with(this).asBitmap().load(movieCinemaSchedule.getMovie().getImageURL()).into(movieImage);
         Glide.with(this).asBitmap().load(movieCinemaSchedule.getCinema().getImage()).into(circleImageCinema);
 
         plus.setOnClickListener(this);

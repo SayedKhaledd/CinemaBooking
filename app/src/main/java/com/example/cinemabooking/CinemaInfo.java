@@ -50,6 +50,10 @@ public class CinemaInfo extends AppCompatActivity implements FilmOnClickListener
             Glide.with(this).asBitmap().load(cinema.getImage()).into(ImageViewCinema);
         }
         initImageBitmaps();
+
+
+
+
     }
 
     private void initImageBitmaps() {
@@ -90,7 +94,7 @@ public class CinemaInfo extends AppCompatActivity implements FilmOnClickListener
 
     @Override
     public void filmAddOnClickListener(Film film) {
-        Intent intent = new Intent(getApplicationContext(), FilmInfo.class);
+        Intent intent = new Intent(getApplicationContext(), FilmInfoActivity.class);
         intent.putExtra("MovieFragment", film);
         startActivity(intent);
     }

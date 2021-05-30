@@ -15,6 +15,8 @@ public class Cinema implements Serializable {
         this.image = image;
     }
 
+    public Cinema() {
+    }
 
     public void setGeo(double latitude, double longitude) {
         this.latitude = latitude;

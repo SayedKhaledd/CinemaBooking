@@ -32,12 +32,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class FilmInfo extends AppCompatActivity implements MovieCinemaClickListenter, View.OnClickListener, OnLikeListener {
+public class FilmInfoActivity extends AppCompatActivity implements MovieCinemaClickListenter, View.OnClickListener, OnLikeListener {
     ImageView imageViewFilm;
     TextView title;
     String vId;
@@ -58,7 +57,7 @@ public class FilmInfo extends AppCompatActivity implements MovieCinemaClickListe
         film = (Film) i.getSerializableExtra("MovieFragment");
         if (film != null) {
             title.setText(film.getName());
-            Glide.with(this).asBitmap().load(film.getImageUML()).into(imageViewFilm);
+            Glide.with(this).asBitmap().load(film.getImageURL()).into(imageViewFilm);
 
         }
         circleImageView.setOnClickListener(this);

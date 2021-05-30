@@ -3,23 +3,24 @@ package com.example.cinemabooking.Model;
 import java.io.Serializable;
 
 public class Film implements Serializable {
-    private String name , imageUML,description;
+    private int id;
+    private String name , imageURL,description;
 
     public Film(){}
 
 
 
-    public Film(String name, String imageUML) {
+    public Film(String name, String description) {
         this.name = name;
-        this.imageUML = imageUML;
+        this.description = description;
     }
 
-    public String getImageUML() {
-        return imageUML;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setImageUML(String imageUML) {
-        this.imageUML = imageUML;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public String getName() {
