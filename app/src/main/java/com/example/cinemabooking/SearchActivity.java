@@ -23,7 +23,7 @@ import com.example.cinemabooking.Model.Film;
 
 import java.util.ArrayList;
 
-public class Search extends AppCompatActivity implements TextWatcher {
+public class SearchActivity extends AppCompatActivity implements TextWatcher {
     private final int VOICE_REQUEST = 1999;
     EditText searchText;
     private java.util.List<Film> list;

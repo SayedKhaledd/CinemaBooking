@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                showDialog();
                 return true;
             case R.id.search_menu:
-                Intent intent2 = new Intent(MainActivity.this, Search.class);
+                Intent intent2 = new Intent(MainActivity.this, SearchActivity.class);
                 startActivity(intent2);
                 return true;}
 
