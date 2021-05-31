@@ -230,24 +230,23 @@ public class FilmInfoActivity extends AppCompatActivity implements MovieCinemaCl
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     boolean check = false;
+                    int id = 1;
                     for (DataSnapshot snap : snapshot.getChildren()) {
                         UserFavorite userFavorite = snap.getValue(UserFavorite.class);
                         if (userFavorite.getEmail().equals(sharedPreferences.getString(Constants.EMAIL, "DEFAULT"))) {
                             if (userFavorite.getMovieId() == filmIndex) {
                                 Toast.makeText(getApplicationContext(), "already added", Toast.LENGTH_SHORT).show();
-
-
                                 check = true;
                             }
 
 
                         }
 
-
+                        id=Integer.parseInt(snap.getKey());
                     }
                     if (!check) {
                         UserFavorite userFavorite = new UserFavorite(filmIndex, sharedPreferences.getString(Constants.EMAIL, "DEFAULT"));
-                        myDatabase.child("UserFavorite").child((snapshot.getChildrenCount() + 1) + "").setValue(userFavorite);
+                        myDatabase.child("UserFavorite").child((id + 1) + "").setValue(userFavorite);
                         Toast.makeText(getApplicationContext(), "added", Toast.LENGTH_SHORT).show();
 
 
