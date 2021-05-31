@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -56,52 +57,43 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Intent intent = new Intent(this, SignupActivity.class);
             startActivity(intent);
         } else if (v.getId() == R.id.next_button) {
-            user.setPassword(password.getText().toString());
-            user.setUsername(username.getText().toString());
-            Log.d("TAG", "onClick: " + username.getText().toString() + " " + password.getText().toString());
 
-            checklogin();
-            if (check[0]) {
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                finish();
+            databaseuser.addListenerForSingleValueEvent(new ValueEventListener() {
 
-            } else {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Toast.makeText(getApplicationContext(), "username exists", Toast.LENGTH_LONG).show();
 
-                Log.d("TAG", "onClick: " + "didn't find");
-            }
+                    for (DataSnapshot snap : dataSnapshot.getChildren()) {
+                        User user = snap.getValue(User.class);
+                        if (user.getUsername().equals(username.getText().toString()) && user.getPassword().equals(password.getText().toString())) {
+                            Toast.makeText(getApplicationContext(), "logged in successfully", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getApplication(), MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                        else if(user.getUsername().equals(username.getText().toString()) && !user.getPassword().equals(password.getText().toString())){
+                            Toast.makeText(getApplicationContext(), "wrong password", Toast.LENGTH_LONG).show();
+
+                        }
+
+
+
+                    }
+                    Toast.makeText(getApplicationContext(), "didn't find username", Toast.LENGTH_LONG).show();
+
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+
+                    Log.w("TAG", "Failed to read value.", error.toException());
+                }
+            });
 
         }
     }
 
-    public void checklogin() {
-        databaseuser.addListenerForSingleValueEvent(new ValueEventListener() {
 
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists())
-                    for (int i = 1; i <= dataSnapshot.getChildrenCount(); i++) {
-                        Log.d("TAG", "onClick: in loop " + dataSnapshot.child(i + "").child("password").getValue() + " " + dataSnapshot.child(i + "").child("username").getValue());
-                        String username = dataSnapshot.child(i + "").child("password").getValue().toString();
-                        String password = dataSnapshot.child(i + "").child("username").getValue().toString();
-                        boolean checkk = user.getPassword().equals(password) && user.getUsername().equals(username);
-                        Log.d("TAG", "onDataChange: " + checkk);
-                        if (checkk) {
-                            check[0] = true;
-                            break;
-                        }
-
-                    }
-
-                else
-                    Log.d("TAG", "onDataChange: " + "didn't exist");
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-
-                Log.w("TAG", "Failed to read value.", error.toException());
-            }
-        });
-    }
 }

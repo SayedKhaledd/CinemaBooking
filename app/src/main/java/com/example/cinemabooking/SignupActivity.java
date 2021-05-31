@@ -57,9 +57,11 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     User user = snap.getValue(User.class);
                     if (user.getEmail().equals(email.getText().toString())) {
                         Toast.makeText(getApplicationContext(), "email exists", Toast.LENGTH_LONG).show();
+                        break;
 
                     } else if (user.getUsername().equals(username.getText().toString())) {
                         Toast.makeText(getApplicationContext(), "username exists", Toast.LENGTH_LONG).show();
+                        break;
 
                     } else {
                         user.setEmail(email.getText().toString());
@@ -67,10 +69,11 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                         user.setPassword(password.getText().toString());
                         user.setFirstname(firstname.getText().toString());
                         user.setLastname(lastname.getText().toString());
-                        databaseuser.child((Integer.parseInt(snap.getKey()) + 1) + "").setValue(user);
+                        databaseuser.child((dataSnapshot.getChildrenCount() + 1) + "").setValue(user);
                         Intent intent = new Intent(getApplication(), MainActivity.class);
                         startActivity(intent);
                         finish();
+                        break;
                     }
 
                 }
