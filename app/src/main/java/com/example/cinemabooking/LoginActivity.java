@@ -96,8 +96,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             finish();
                             break;
                         } else if (user.getEmail().equals(email.getText().toString()) && !user.getPassword().equals(password.getText().toString())) {
-                            Log.d("TAG", "email "+user.getEmail());
-                            Log.d("TAG", "password "+user.getPassword());
+                            Log.d("TAG", "email " + user.getEmail());
+                            Log.d("TAG", "password " + user.getPassword());
                             Toast.makeText(getApplicationContext(), "wrong password", Toast.LENGTH_LONG).show();
                             check = true;
                         }
