@@ -47,16 +47,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Intent i = getIntent();
         user = (User) i.getSerializableExtra("user");
         if (user != null) {
-            Intent intent = new Intent(getApplication(), MainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
+            Log.d("TAG", "finished: ");
             finish();
+
         }
         //  checklogin();
     }
 
     @Override
     public void onClick(View v) {
-        final boolean[] check = {false};
         if (v.getId() == R.id.skip) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
@@ -71,23 +72,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-
+                    boolean check = false;
                     for (DataSnapshot snap : dataSnapshot.getChildren()) {
                         User user = snap.getValue(User.class);
                         if (user.getUsername().equals(username.getText().toString()) && user.getPassword().equals(password.getText().toString())) {
                             Toast.makeText(getApplicationContext(), "logged in successfully", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(getApplication(), MainActivity.class);
+                            check=true;
                             startActivity(intent);
                             finish();
                             break;
                         } else if (user.getUsername().equals(username.getText().toString()) && !user.getPassword().equals(password.getText().toString())) {
                             Toast.makeText(getApplicationContext(), "wrong password", Toast.LENGTH_LONG).show();
-
+                            check = true;
                         }
 
 
                     }
-                    Toast.makeText(getApplicationContext(), "didn't find username", Toast.LENGTH_LONG).show();
+                    if (!check)
+                        Toast.makeText(getApplicationContext(), "didn't find username", Toast.LENGTH_LONG).show();
 
 
                 }
