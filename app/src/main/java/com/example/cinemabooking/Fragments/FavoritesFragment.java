@@ -1,10 +1,13 @@
 package com.example.cinemabooking.Fragments;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -13,7 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.cinemabooking.Adapters.MoviesAdapter;
+import com.example.cinemabooking.Constants;
+import com.example.cinemabooking.FilmInfoActivity;
+import com.example.cinemabooking.Listeners.FilmOnClickListener;
 import com.example.cinemabooking.Model.Film;
+import com.example.cinemabooking.Model.UserFavorite;
 import com.example.cinemabooking.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,7 +35,7 @@ import java.util.ArrayList;
  * Use the {@link FavoritesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FavoritesFragment extends Fragment {
+public class FavoritesFragment extends Fragment implements FilmOnClickListener {
 
     View view;
     RecyclerView recyclerView;
@@ -39,6 +46,7 @@ public class FavoritesFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private ArrayList<Film> filmArrayList = new ArrayList<>();
+    ArrayList<Integer> filmIndecies = new ArrayList<>();
     MoviesAdapter adapter;
     private SharedPreferences sharedPreferences;
 
@@ -88,35 +96,30 @@ public class FavoritesFragment extends Fragment {
         //Button button=view.findViewById(R.id.button_movie);
         //button.setOnClickListener(new View.OnClickListener() {
         recyclerView = (RecyclerView) view.findViewById(R.id.movies_recycler_view);
+        sharedPreferences = getActivity().getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE);
 
 
         initImageBitmaps();
 
 
-
         return view;
     }
-    private void initImageBitmaps()  {
 
-        databaseRoot.child("Film").addListenerForSingleValueEvent(new ValueEventListener() {
+    private void initImageBitmaps() {
+
+        databaseRoot.child("UserFavorite").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for (DataSnapshot snap : snapshot.getChildren()) {
-                    Film myFilm = snap.getValue(Film.class);
-                    if (myFilm != null) {
-                        Log.d("TAG", "my name is : " + myFilm.getName());
-                        Log.d("TAG", "my description is : " + myFilm.getDescription());
-                        Log.d("TAG", "my imageURL is : " + myFilm.getImageURL());
+                    UserFavorite userFavorite = snap.getValue(UserFavorite.class);
+                    if (userFavorite.getEmail().equals(sharedPreferences.getString(Constants.EMAIL, "DEFAULT"))) {
+                        filmIndecies.add(userFavorite.getMovieId());
 
-                        filmArrayList.add(myFilm);
                     }
 
-                }
 
-                Log.d("TAG", "finished ");
-                adapter.notifyDataSetChanged();
-                Log.d("TAG", "notified ");
+                }
 
 
             }
@@ -127,10 +130,63 @@ public class FavoritesFragment extends Fragment {
             }
 
         });
-        //intRecyclerView();
+        databaseRoot.child("Film").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                for (DataSnapshot snap : snapshot.getChildren()) {
+                    if (filmIndecies.contains(Integer.parseInt(snap.getKey()))) {
+                        Film film = snap.getValue(Film.class);
+                        filmArrayList.add(film);
+                    }
+
+
+                }
+                adapter.notifyDataSetChanged();
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+
+
+        intRecyclerView();
 
 
     }
+
+    private void intRecyclerView() {
+
+        for (int i = 0; i < filmArrayList.size(); i++) {
+            Log.d("TAG", "intRecyclerView: " + filmArrayList.get(i).getName());
+            Log.d("TAG", "intRecyclerView: " + filmArrayList.get(i).getImageURL());
+            Log.d("TAG", "intRecyclerView: " + filmArrayList.get(i).getDescription());
+
+        }
+        Log.d("TAG", "intRecyclerView: size is  " + filmArrayList.size());
+
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.movies_recycler_view);
+        adapter = new MoviesAdapter(getContext(), filmArrayList, this);
+        recyclerView.setAdapter(adapter);
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //GridView
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+    }
+
+    @Override
+    public void filmAddOnClickListener(Film film) {
+
+        Intent intent = new Intent(getContext(), FilmInfoActivity.class);
+        intent.putExtra("MovieFragment", film);
+        intent.putExtra("Filmindex", filmArrayList.indexOf(film) + 1);
+        Log.d("TAG", "Filmindex in film fragment: " + filmArrayList.indexOf(film) + 1);
+        startActivity(intent);
+    }
+
 
 }
