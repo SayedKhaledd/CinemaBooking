@@ -1,6 +1,8 @@
 package com.example.cinemabooking;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +27,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference databaseuser = database.getReference().child("User");
     User user;
+    private SharedPreferences sharedPreferences;
 
     Button logIn;
     final boolean check[] = new boolean[1];
@@ -46,6 +49,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         Intent i = getIntent();
         user = (User) i.getSerializableExtra("user");
+        sharedPreferences = getSharedPreferences("myperf", Context.MODE_PRIVATE);
+
         if (user != null) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
