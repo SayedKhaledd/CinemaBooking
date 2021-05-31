@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     for (DataSnapshot snap : dataSnapshot.getChildren()) {
                         User user = snap.getValue(User.class);
                         if (user.getEmail().equals(email.getText().toString()) && user.getPassword().equals(password.getText().toString())) {
-                            if(rememberme.isChecked())
+//                            if(rememberme.isChecked())
                             sharedperference(user.getEmail());
 
 
@@ -96,6 +96,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             finish();
                             break;
                         } else if (user.getEmail().equals(email.getText().toString()) && !user.getPassword().equals(password.getText().toString())) {
+                            Log.d("TAG", "email "+user.getEmail());
+                            Log.d("TAG", "password "+user.getPassword());
                             Toast.makeText(getApplicationContext(), "wrong password", Toast.LENGTH_LONG).show();
                             check = true;
                         }
@@ -123,7 +125,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         SharedPreferences.Editor edit = sharedPreferences.edit();
         edit.putString(Constants.EMAIL, email);
         edit.putBoolean(Constants.REMEMBER_ME, rememberme.isChecked());
-
         edit.apply();
 
     }

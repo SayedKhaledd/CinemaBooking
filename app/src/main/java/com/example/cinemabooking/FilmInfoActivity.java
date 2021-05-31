@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +28,7 @@ import com.example.cinemabooking.Listeners.MovieCinemaClickListenter;
 import com.example.cinemabooking.Model.Cinema;
 import com.example.cinemabooking.Model.Film;
 import com.example.cinemabooking.Model.MovieCinemaSchedule;
+import com.example.cinemabooking.Model.UserFavorite;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,7 +60,8 @@ public class FilmInfoActivity extends AppCompatActivity implements MovieCinemaCl
     ArrayList<Integer> cinemaIndecies = new ArrayList<>();
     RecyclerView recyclerView;
     MovieCinemaScheduleAdapter adapter;
-
+    int current = 0;
+    private SharedPreferences sharedPreferences;
     int filmIndex;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +71,8 @@ public class FilmInfoActivity extends AppCompatActivity implements MovieCinemaCl
         title = findViewById(R.id.textView2);
         imageViewFilm = findViewById(R.id.imageViewInf);
         circleImageView = (CircleImageView) findViewById(R.id.play_image);
+        sharedPreferences = getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE);
+
         Intent i = getIntent();
         film = (Film) i.getSerializableExtra("MovieFragment");
         if (film != null) {
@@ -218,12 +224,82 @@ public class FilmInfoActivity extends AppCompatActivity implements MovieCinemaCl
 
     @Override
     public void liked(LikeButton likeButton) {
-        //write to add  to favorite
-        Toast.makeText(getApplicationContext(), "added", Toast.LENGTH_SHORT).show();
+        if (sharedPreferences.getString(Constants.EMAIL, "DEFAULT") != null && !sharedPreferences.getString(Constants.EMAIL, "DEFAULT").equals("DEFAULT")) {
+            Log.d("TAG", "liked: " + "entereed ");
+            myDatabase.child("UserFavorite").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    boolean check = false;
+                    for (DataSnapshot snap : snapshot.getChildren()) {
+                        UserFavorite userFavorite = snap.getValue(UserFavorite.class);
+                        if (userFavorite.getEmail().equals(sharedPreferences.getString(Constants.EMAIL, "DEFAULT"))) {
+                            if (userFavorite.getMovieId() == filmIndex) {
+
+                                check = true;
+                            }
+
+
+                        }
+
+
+                    }
+                    if (!check) {
+                        UserFavorite userFavorite = new UserFavorite(filmIndex, sharedPreferences.getString(Constants.EMAIL, "DEFAULT"));
+                        myDatabase.child("UserFavorite").child((snapshot.getChildrenCount() + 1) + "").setValue(userFavorite);
+
+
+                    }
+
+
+                    Log.d("TAG", "finished ");
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            Toast.makeText(getApplicationContext(), "added", Toast.LENGTH_SHORT).show();
+        } else {
+            Log.d("TAG", "liked: " + sharedPreferences.getString(Constants.EMAIL, "DEFAULT"));
+            Toast.makeText(getApplicationContext(), "not added, no email", Toast.LENGTH_SHORT).show();
+
+        }
     }
 
     @Override
     public void unLiked(LikeButton likeButton) {
 //write to move  to favorite
+        if (sharedPreferences.getString(Constants.EMAIL, "DEFAULT") != null && !sharedPreferences.getString(Constants.EMAIL, "DEFAULT").equals("DEFAULT")) {
+            myDatabase.child("UserFavorite").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    int i = 1;
+                    for (DataSnapshot snap : snapshot.getChildren()) {
+                        UserFavorite userFavorite = snap.getValue(UserFavorite.class);
+
+                        if (userFavorite.getEmail().equals(sharedPreferences.getString(Constants.EMAIL, "DEFAULT"))) {
+                            if (userFavorite.getMovieId() == filmIndex) {
+                                myDatabase.child("UserFavorite").child(i + "").removeValue();
+
+                            }
+
+
+                        }
+
+                        i++;
+                    }
+
+
+                    Log.d("TAG", "finished ");
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            Toast.makeText(getApplicationContext(), "deleted", Toast.LENGTH_SHORT).show();
+        }
     }
 }
