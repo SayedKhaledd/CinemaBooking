@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.cinemabooking.Adapters.MoviesAdapter;
 import com.example.cinemabooking.Constants;
@@ -106,57 +107,59 @@ public class FavoritesFragment extends Fragment implements FilmOnClickListener {
     }
 
     private void initImageBitmaps() {
+        if (sharedPreferences.getString(Constants.EMAIL, "DEFAULT").equals("DEFAULT"))
+            Toast.makeText(getContext(), "log out and check remember me first", Toast.LENGTH_SHORT).show();
+        else {
+            databaseRoot.child("UserFavorite").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-        databaseRoot.child("UserFavorite").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot snap : snapshot.getChildren()) {
+                        UserFavorite userFavorite = snap.getValue(UserFavorite.class);
+                        if (userFavorite.getEmail().equals(sharedPreferences.getString(Constants.EMAIL, "DEFAULT"))) {
+                            filmIndecies.add(userFavorite.getMovieId());
 
-                for (DataSnapshot snap : snapshot.getChildren()) {
-                    UserFavorite userFavorite = snap.getValue(UserFavorite.class);
-                    if (userFavorite.getEmail().equals(sharedPreferences.getString(Constants.EMAIL, "DEFAULT"))) {
-                        filmIndecies.add(userFavorite.getMovieId());
+                        }
+
 
                     }
 
 
                 }
 
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            });
+            databaseRoot.child("Film").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-            }
+                    for (DataSnapshot snap : snapshot.getChildren()) {
+                        if (filmIndecies.contains(Integer.parseInt(snap.getKey()))) {
+                            Film film = snap.getValue(Film.class);
+                            filmArrayList.add(film);
+                        }
 
-        });
-        databaseRoot.child("Film").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                for (DataSnapshot snap : snapshot.getChildren()) {
-                    if (filmIndecies.contains(Integer.parseInt(snap.getKey()))) {
-                        Film film = snap.getValue(Film.class);
-                        filmArrayList.add(film);
                     }
+                    adapter.notifyDataSetChanged();
 
 
                 }
-                adapter.notifyDataSetChanged();
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+
+            });
 
 
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
-        });
-
-
-        intRecyclerView();
-
+            intRecyclerView();
+        }
 
     }
 

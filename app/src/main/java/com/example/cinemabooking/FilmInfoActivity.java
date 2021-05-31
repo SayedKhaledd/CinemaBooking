@@ -261,9 +261,10 @@ public class FilmInfoActivity extends AppCompatActivity implements MovieCinemaCl
 
                 }
             });
-        } else {
+        }
+        else {
             Log.d("TAG", "liked: " + sharedPreferences.getString(Constants.EMAIL, "DEFAULT"));
-            Toast.makeText(getApplicationContext(), "not added, no email", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "not added, log out and check remember me first", Toast.LENGTH_SHORT).show();
 
         }
     }

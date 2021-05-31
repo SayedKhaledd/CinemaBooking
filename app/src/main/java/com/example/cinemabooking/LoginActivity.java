@@ -59,6 +59,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             finish();
 
 
+        } else if (sharedPreferences.getString(Constants.EMAIL, "DEFAULT") != null && !sharedPreferences.getString(Constants.EMAIL, "DEFAULT").equals("DEFAULT")) {
+            Log.d("TAG", "onCreate: " + sharedPreferences.getString(Constants.EMAIL, "DEFAULT"));
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            Log.d("TAG", "finished: ");
+            finish();
         }
 
 
@@ -85,11 +91,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     for (DataSnapshot snap : dataSnapshot.getChildren()) {
                         User user = snap.getValue(User.class);
                         if (user.getEmail().equals(email.getText().toString()) && user.getPassword().equals(password.getText().toString())) {
-//                            if(rememberme.isChecked())
-                            sharedperference(user.getEmail());
+                            if (rememberme.isChecked())
+                                sharedperference(user.getEmail());
 
 
-                            Toast.makeText(getApplicationContext(), "logged in successfully", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "logged in successfully", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplication(), MainActivity.class);
                             check = true;
                             startActivity(intent);
@@ -98,14 +104,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         } else if (user.getEmail().equals(email.getText().toString()) && !user.getPassword().equals(password.getText().toString())) {
                             Log.d("TAG", "email " + user.getEmail());
                             Log.d("TAG", "password " + user.getPassword());
-                            Toast.makeText(getApplicationContext(), "wrong password", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "wrong password", Toast.LENGTH_SHORT).show();
                             check = true;
                         }
 
 
                     }
                     if (!check)
-                        Toast.makeText(getApplicationContext(), "didn't find email", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "didn't find email", Toast.LENGTH_SHORT).show();
 
 
                 }
