@@ -234,6 +234,7 @@ public class FilmInfoActivity extends AppCompatActivity implements MovieCinemaCl
                         UserFavorite userFavorite = snap.getValue(UserFavorite.class);
                         if (userFavorite.getEmail().equals(sharedPreferences.getString(Constants.EMAIL, "DEFAULT"))) {
                             if (userFavorite.getMovieId() == filmIndex) {
+                                Toast.makeText(getApplicationContext(), "already added", Toast.LENGTH_SHORT).show();
 
                                 check = true;
                             }
@@ -246,6 +247,7 @@ public class FilmInfoActivity extends AppCompatActivity implements MovieCinemaCl
                     if (!check) {
                         UserFavorite userFavorite = new UserFavorite(filmIndex, sharedPreferences.getString(Constants.EMAIL, "DEFAULT"));
                         myDatabase.child("UserFavorite").child((snapshot.getChildrenCount() + 1) + "").setValue(userFavorite);
+                        Toast.makeText(getApplicationContext(), "added", Toast.LENGTH_SHORT).show();
 
 
                     }
@@ -259,7 +261,6 @@ public class FilmInfoActivity extends AppCompatActivity implements MovieCinemaCl
 
                 }
             });
-            Toast.makeText(getApplicationContext(), "added", Toast.LENGTH_SHORT).show();
         } else {
             Log.d("TAG", "liked: " + sharedPreferences.getString(Constants.EMAIL, "DEFAULT"));
             Toast.makeText(getApplicationContext(), "not added, no email", Toast.LENGTH_SHORT).show();
