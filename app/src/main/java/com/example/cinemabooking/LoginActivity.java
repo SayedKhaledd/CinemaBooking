@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cinemabooking.Model.Cinema;
 import com.example.cinemabooking.Model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,7 +24,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     EditText username, password;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference databaseuser = database.getReference().child("User");
-    User user = new User();
+    User user;
 
     Button logIn;
     final boolean check[] = new boolean[1];
@@ -42,6 +43,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         logIn = (Button) findViewById(R.id.next_button);
         logIn.setOnClickListener(this);
+
+        Intent i = getIntent();
+        user = (User) i.getSerializableExtra("user");
+        if (user != null) {
+            Intent intent = new Intent(getApplication(), MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
         //  checklogin();
     }
 
@@ -62,7 +71,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    Toast.makeText(getApplicationContext(), "username exists", Toast.LENGTH_LONG).show();
 
                     for (DataSnapshot snap : dataSnapshot.getChildren()) {
                         User user = snap.getValue(User.class);
@@ -71,12 +79,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Intent intent = new Intent(getApplication(), MainActivity.class);
                             startActivity(intent);
                             finish();
-                        }
-                        else if(user.getUsername().equals(username.getText().toString()) && !user.getPassword().equals(password.getText().toString())){
+                            break;
+                        } else if (user.getUsername().equals(username.getText().toString()) && !user.getPassword().equals(password.getText().toString())) {
                             Toast.makeText(getApplicationContext(), "wrong password", Toast.LENGTH_LONG).show();
 
                         }
-
 
 
                     }

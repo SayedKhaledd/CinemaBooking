@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -53,29 +54,50 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                boolean check = false;
                 for (DataSnapshot snap : dataSnapshot.getChildren()) {
                     User user = snap.getValue(User.class);
                     if (user.getEmail().equals(email.getText().toString())) {
                         Toast.makeText(getApplicationContext(), "email exists", Toast.LENGTH_LONG).show();
+                        check = true;
                         break;
 
                     } else if (user.getUsername().equals(username.getText().toString())) {
                         Toast.makeText(getApplicationContext(), "username exists", Toast.LENGTH_LONG).show();
+                        check = true;
+
                         break;
 
+                    }
+
+                }
+                if (!check) {
+                    if (email.getText().toString().equals("")
+                            || username.getText().toString().equals("")
+                            || password.getText().toString().equals("")
+                            || firstname.getText().toString().equals("")
+                            || lastname.getText().toString().equals("")
+                            || email.getText().toString().equals(" ")
+                            || username.getText().toString().equals(" ")
+                            || password.getText().toString().equals(" ")
+                            || firstname.getText().toString().equals(" ")
+                            || lastname.getText().toString().equals(" ")
+                    ) {
+                        Toast.makeText(getApplicationContext(), "all fields are required", Toast.LENGTH_LONG).show();
+
                     } else {
+
                         user.setEmail(email.getText().toString());
                         user.setUsername(username.getText().toString());
                         user.setPassword(password.getText().toString());
                         user.setFirstname(firstname.getText().toString());
                         user.setLastname(lastname.getText().toString());
                         databaseuser.child((dataSnapshot.getChildrenCount() + 1) + "").setValue(user);
-                        Intent intent = new Intent(getApplication(), MainActivity.class);
+                        Intent intent = new Intent(getApplication(), LoginActivity.class);
+                        intent.putExtra("user", user);
                         startActivity(intent);
                         finish();
-                        break;
                     }
-
                 }
 
 
