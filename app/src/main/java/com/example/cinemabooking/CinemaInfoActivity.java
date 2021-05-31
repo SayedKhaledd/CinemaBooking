@@ -79,8 +79,8 @@ public class CinemaInfoActivity extends AppCompatActivity implements FilmOnClick
 
                 for (DataSnapshot snap : snapshot.getChildren()) {
                     MovieCinemaSchedule mySchedule = snap.getValue(MovieCinemaSchedule.class);
-                    if (mySchedule != null && mySchedule.getFilmId() == cinemaIndex) {
-                        filmsIndecies.add(mySchedule.getCinemaId());
+                    if (mySchedule != null && mySchedule.getCinemaId() == cinemaIndex) {
+                        filmsIndecies.add(mySchedule.getFilmId());
                     }
 
 
