@@ -101,7 +101,7 @@ public class CinemaInfoActivity extends AppCompatActivity implements FilmOnClick
                 for (DataSnapshot snap : snapshot.getChildren()) {
                     if (filmsIndecies.contains(Integer.parseInt(snap.getKey()))) {
                         Film myfilm = snap.getValue(Film.class);
-                         filmList.add(myfilm);
+                        filmList.add(myfilm);
                     }
                     adapter.notifyDataSetChanged();
 
@@ -116,14 +116,13 @@ public class CinemaInfoActivity extends AppCompatActivity implements FilmOnClick
         });
 
 
-
         intRecyclerView();
     }
 
     private void intRecyclerView() {
 
-         recyclerView = findViewById(R.id.film_recycler_view_info_cinema);
-         adapter = new MoviesAdapter(getApplicationContext(), filmList, this);
+        recyclerView = findViewById(R.id.film_recycler_view_info_cinema);
+        adapter = new MoviesAdapter(getApplicationContext(), filmList, this);
         recyclerView.setAdapter(adapter);
         //recyclerView.setLayoutManager(new LinearLayoutManager(this));
         //GridView
@@ -135,6 +134,7 @@ public class CinemaInfoActivity extends AppCompatActivity implements FilmOnClick
     public void filmAddOnClickListener(Film film) {
         Intent intent = new Intent(getApplicationContext(), FilmInfoActivity.class);
         intent.putExtra("MovieFragment", film);
+        intent.putExtra("Filmindex", filmList.indexOf(film) + 1);
         startActivity(intent);
     }
 
