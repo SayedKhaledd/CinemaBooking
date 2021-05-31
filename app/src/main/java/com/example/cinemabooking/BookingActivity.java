@@ -133,19 +133,7 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
 
                         i++;
                     }
-                    GmailSender sender = new GmailSender("onlineshoppingzeroteam@gmail.com", "sdsd12345");
-                    try {
-                        sender.sendMail("Tickets paid",
-                                "you have bought \n" + counter.getText() + "for the movie" + myFilm.getName(),
-                                "onlineshoppingzeroteam@gmail.com", sharedPreferences.getString(Constants.EMAIL, "DEFAULTY")
-                        );
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    Intent intent = new Intent(getApplication(), MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                    sendemail(sharedPreferences.getString(Constants.EMAIL, "DEFAULTY"), "you have bought \n" + counter.getText() + "for the movie" + myFilm.getName());
 
 
                 }
@@ -158,8 +146,6 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
             });
 
 
-
-
             Toast.makeText(getApplicationContext(), "email with confirm will \n send soon", Toast.LENGTH_LONG).show();
             // movieCinemaSchedule.setNumOfEmptySeats(movieCinemaSchedule.getNumOfEmptySeats()-x);
 
@@ -168,6 +154,35 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
 
         updateTotal();
     }
+
+    void sendemail(String email, String body) {
+        final ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setTitle("Sending Email");
+        dialog.setMessage("Please wait");
+        dialog.show();
+
+        Thread sender = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    GmailSender sender = new GmailSender("onlineshoppingzeroteam@gmail.com", "sdsd12345");
+                    sender.sendMail("Your Tickets",
+                            body,
+                            "onlineshoppingzeroteam@gmail.com",
+                            email);
+                    dialog.dismiss();
+
+
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_LONG).show();
+                    Log.e("mylog", "Error: " + e.getMessage());
+                    dialog.setMessage("error");
+                }
+            }
+        });
+        sender.start();
+    }
+
 
     private void updateTotal() {
         int x = Integer.parseInt(counter.getText().toString());
