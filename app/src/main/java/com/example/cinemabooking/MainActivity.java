@@ -15,7 +15,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -25,18 +27,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
-    Button button ;
+    Button button;
     Dialog dialog;
     BottomNavigationView bottomNavigationView;
+    private SharedPreferences sharedPreferences;
 
     @Override
     public void onBackPressed() {
+        this.finish();
         super.onBackPressed();
-        finish();
     }
 
     @Override
@@ -45,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
+        sharedPreferences=getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -55,33 +60,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         }
 
-        dialog =new Dialog(this);
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference wq = database.getReference();
-        DatabaseReference databaseuser = database.getReference().child("User");
+        dialog = new Dialog(this);
 
-
-        databaseuser.child("1").addValueEventListener(new ValueEventListener() {
-            private static final String TAG = "oncreate";
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                Log.d(TAG, "onDataChange: "+dataSnapshot.getValue()  );
-
-
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-//                String value = dataSnapshot.getValue(String.class);
-                //   Log.d(TAG, "Value is: " + value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
     }
 
 
@@ -91,12 +71,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         if (item.getItemId() == R.id.page_1) {
             selectedFragment = new FilmFragment();
             Log.d("Main Activity:", "Page 1");
-        }
-        else if (item.getItemId() == R.id.page_2) {
+        } else if (item.getItemId() == R.id.page_2) {
             selectedFragment = new CinemaFragment();
             Log.d("Main Activity:", "Page 2");
-        }
-        else if (item.getItemId() == R.id.page_3) {
+        } else if (item.getItemId() == R.id.page_3) {
             selectedFragment = new FavoritesFragment();
             Log.d("Main Activity:", "Page 3");
         }
@@ -104,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, selectedFragment).commit();
         return true;
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -115,31 +94,40 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.account_menu:
-               showDialog();
+                showDialog();
                 return true;
             case R.id.search_menu:
                 Intent intent2 = new Intent(MainActivity.this, SearchActivity.class);
                 startActivity(intent2);
-                return true;}
+                return true;
+        }
 
 
         return false;
     }
-    public void showDialog(){
-dialog.setContentView(R.layout.dialog_logout);
-dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        ImageView imageViewDio =dialog.findViewById(R.id.image_dialog);
-        Button dialogLogOut=dialog.findViewById(R.id.dialog_logout);
+
+    public void showDialog() {
+        dialog.setContentView(R.layout.dialog_logout);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView imageViewDio = dialog.findViewById(R.id.image_dialog);
+        Button dialogLogOut = dialog.findViewById(R.id.dialog_logout);
+        TextView textView = dialog.findViewById(R.id.user_account);
+        if(sharedPreferences.getString(Constants.EMAIL, "DEFAULT")!=null)
+        textView.setText(sharedPreferences.getString(Constants.EMAIL, "DEFAULT"));
 
         dialogLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(getApplicationContext(), LoginActivity.class);
+                SharedPreferences.Editor edit = sharedPreferences.edit();
+                edit.putString(Constants.EMAIL, "DEFAULT");
+                edit.putBoolean(Constants.REMEMBER_ME, false);
+                edit.apply();
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
             }
 
         });
-dialog.show();
+        dialog.show();
     }
 
 }

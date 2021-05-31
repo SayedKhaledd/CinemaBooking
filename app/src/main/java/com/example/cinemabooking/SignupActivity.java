@@ -114,5 +114,11 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        super.onBackPressed();
+    }
+
 
 }

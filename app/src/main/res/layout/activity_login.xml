@@ -31,13 +31,13 @@
             android:src="@drawable/popcorn"
             android:layout_gravity="center"/>
             <EditText
-            android:id="@+id/username_view"
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="48dp"
 
                 android:layout_margin="18dp"
                 android:background="@drawable/edit_round"
-            android:hint="  username"
+            android:hint="  email"
             android:drawableLeft="@drawable/user"
             android:inputType="textMultiLine"
             android:layout_marginTop="50dp"
