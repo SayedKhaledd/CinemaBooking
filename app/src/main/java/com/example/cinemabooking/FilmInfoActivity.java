@@ -223,7 +223,7 @@ public class FilmInfoActivity extends AppCompatActivity implements MovieCinemaCl
     }
 
     @Override
-    public void liked(LikeButton likeButton) {
+    public void liked(LikeButton likeButtonn) {
         if (sharedPreferences.getString(Constants.EMAIL, "DEFAULT") != null && !sharedPreferences.getString(Constants.EMAIL, "DEFAULT").equals("DEFAULT")) {
             Log.d("TAG", "liked: " + "entereed ");
             myDatabase.child("UserFavorite").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -235,6 +235,7 @@ public class FilmInfoActivity extends AppCompatActivity implements MovieCinemaCl
                         if (userFavorite.getEmail().equals(sharedPreferences.getString(Constants.EMAIL, "DEFAULT"))) {
                             if (userFavorite.getMovieId() == filmIndex) {
                                 Toast.makeText(getApplicationContext(), "already added", Toast.LENGTH_SHORT).show();
+
 
                                 check = true;
                             }
@@ -261,8 +262,7 @@ public class FilmInfoActivity extends AppCompatActivity implements MovieCinemaCl
 
                 }
             });
-        }
-        else {
+        } else {
             Log.d("TAG", "liked: " + sharedPreferences.getString(Constants.EMAIL, "DEFAULT"));
             Toast.makeText(getApplicationContext(), "not added, log out and check remember me first", Toast.LENGTH_SHORT).show();
 
@@ -276,20 +276,20 @@ public class FilmInfoActivity extends AppCompatActivity implements MovieCinemaCl
             myDatabase.child("UserFavorite").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    int i = 1;
+
                     for (DataSnapshot snap : snapshot.getChildren()) {
                         UserFavorite userFavorite = snap.getValue(UserFavorite.class);
 
                         if (userFavorite.getEmail().equals(sharedPreferences.getString(Constants.EMAIL, "DEFAULT"))) {
                             if (userFavorite.getMovieId() == filmIndex) {
-                                myDatabase.child("UserFavorite").child(i + "").removeValue();
 
+                                myDatabase.child("UserFavorite").child(snap.getKey() + "").removeValue();
                             }
 
 
                         }
 
-                        i++;
+
                     }
 
 

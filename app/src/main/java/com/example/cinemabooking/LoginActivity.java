@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             finish();
 
 
-        } else if (sharedPreferences.getString(Constants.EMAIL, "DEFAULT") != null && !sharedPreferences.getString(Constants.EMAIL, "DEFAULT").equals("DEFAULT")) {
+        } else if (sharedPreferences.getBoolean(Constants.REMEMBER_ME,false)) {
             Log.d("TAG", "onCreate: " + sharedPreferences.getString(Constants.EMAIL, "DEFAULT"));
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
@@ -91,7 +91,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     for (DataSnapshot snap : dataSnapshot.getChildren()) {
                         User user = snap.getValue(User.class);
                         if (user.getEmail().equals(email.getText().toString()) && user.getPassword().equals(password.getText().toString())) {
-                            if (rememberme.isChecked())
                                 sharedperference(user.getEmail());
 
 
