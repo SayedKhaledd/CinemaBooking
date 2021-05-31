@@ -23,7 +23,8 @@
             android:layout_height="30dp"
             android:adjustViewBounds="true"
             android:fitsSystemWindows="true"
-            android:src="@drawable/ic_launcher_foreground" />
+
+            android:src="@drawable/popcorn" />
 
         <EditText
             android:id="@+id/search_edit_text"

@@ -127,9 +127,10 @@ public class SearchActivity extends AppCompatActivity implements TextWatcher, Fi
             int i = 0;
             while (list.size() != i) {
 
-                if (list.get(i).getName().contains(key) || list.get(i).getDescription().contains(key)) {
-
-                    films.add(new Film(list.get(i).getName(), list.get(i).getDescription()));
+                if (list.get(i).getName().toLowerCase().contains(key.toLowerCase()) || list.get(i).getDescription().toLowerCase().contains(key.toLowerCase())) {
+                    Film filmT= new Film(list.get(i).getName(), list.get(i).getDescription());
+                    filmT.setImageURL(list.get(i).getImageURL());
+                    films.add(filmT);
 
                 }
 
