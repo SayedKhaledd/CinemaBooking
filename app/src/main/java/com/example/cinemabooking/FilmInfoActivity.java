@@ -168,7 +168,7 @@ public class FilmInfoActivity extends AppCompatActivity implements MovieCinemaCl
 
         String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=" +
                 formatUrl(title.getText().toString() + "trailer")
-                + "&key=AIzaSyCUk_aWpY0xipuc7WSjLgpFfJquHS8hsJA";
+                + "&key=AIzaSyC6Op4l4wN8OXE18ooozS_CMKU0YTc19VY";
 
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
