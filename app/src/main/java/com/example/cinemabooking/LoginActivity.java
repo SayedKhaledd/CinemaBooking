@@ -64,6 +64,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (check[0]) {
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
+                finish();
+
             } else {
 
                 Log.d("TAG", "onClick: " + "didn't find");

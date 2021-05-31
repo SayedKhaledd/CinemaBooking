@@ -129,6 +129,7 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
                     }
                     Intent intent = new Intent(getApplication(), MainActivity.class);
                     startActivity(intent);
+                    finish();
 
 
                 }
