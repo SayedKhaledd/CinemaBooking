@@ -43,6 +43,9 @@ dependencies {
     implementation 'com.github.jd-alexander:LikeButton:0.2.3'
 
 
+    implementation files('libs\\mail.jar')
+    implementation files('libs\\additional.jar')
+    implementation files('libs\\activation.jar')
 
     implementation platform('com.google.firebase:firebase-bom:28.0.1')
     implementation 'com.google.firebase:firebase-analytics'

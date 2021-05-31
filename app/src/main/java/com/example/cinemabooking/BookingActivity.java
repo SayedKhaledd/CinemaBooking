@@ -3,7 +3,10 @@ package com.example.cinemabooking;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.cinemabooking.Email.GmailSender;
 import com.example.cinemabooking.Model.Film;
 import com.example.cinemabooking.Model.MovieCinemaSchedule;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +36,7 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myDatabase = database.getReference();
     Film myFilm;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,7 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
         booking = findViewById(R.id.booking_button);
         movieImage = findViewById(R.id.image_movie);
         circleImageCinema = findViewById(R.id.image_cinema);
+        sharedPreferences = getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE);
 
         Intent i = getIntent();
 
@@ -127,6 +133,16 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
 
                         i++;
                     }
+                    GmailSender sender = new GmailSender("onlineshoppingzeroteam@gmail.com", "sdsd12345");
+                    try {
+                        sender.sendMail("Tickets paid",
+                                "you have bought \n" + counter.getText() + "for the movie" + myFilm.getName(),
+                                "onlineshoppingzeroteam@gmail.com", sharedPreferences.getString(Constants.EMAIL, "DEFAULTY")
+                        );
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                     Intent intent = new Intent(getApplication(), MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -140,6 +156,8 @@ public class BookingActivity extends AppCompatActivity implements View.OnClickLi
                 }
 
             });
+
+
 
 
             Toast.makeText(getApplicationContext(), "email with confirm will \n send soon", Toast.LENGTH_LONG).show();
